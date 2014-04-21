@@ -8,6 +8,8 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " add plugins
+NeoBundle 'w0ng/vim-hybrid'
+
 
 filetype plugin on
 
