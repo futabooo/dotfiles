@@ -1,3 +1,19 @@
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" add plugins
+
+filetype plugin on
+
+NeoBundleCheck
+
+
 " 文字コード・改行コード
 set encoding=utf-8
 
@@ -20,4 +36,7 @@ set ignorecase
 set smartcase
 " 検索時に最後まで行ったら最初に戻る
 set wrapscan
+
+" バックスペースでインデントや改行を削除できるようにする
+set backspace=indent,eol,start
 
