@@ -1,3 +1,6 @@
+" vi互換をオフにする
+set nocompatible
+
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -26,6 +29,7 @@ set title
 " 括弧入力時の対応する括弧を表示
 set showmatch
 " コードの色分け
+colorscheme hybrid
 syntax on
 " インデントをスペース4つ分に設定
 set tabstop=4
