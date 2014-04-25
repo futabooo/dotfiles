@@ -24,6 +24,8 @@ set encoding=utf-8
 
 " 行番号を表示する
 set number
+" カーソルの行数、列数を表示する
+set ruler
 " 編集中のファイル名を表示
 set title
 " 括弧入力時の対応する括弧を表示
