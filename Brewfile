@@ -32,4 +32,5 @@ cask install virtualbox
 cask install xtrafinder
 cask install yorufukurou
 # 不要なファイル削除
-clean
+cleanup
+cask cleanup
