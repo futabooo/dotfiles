@@ -4,6 +4,7 @@ update
 upgrade
 # リポジトリーの追加
 tap phinze/homebrew-cask
+tap sanemat/font
 # パッケージのインストール
 install git
 install ricty
