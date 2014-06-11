@@ -3,6 +3,7 @@ update
 # Fomulaを更新
 upgrade
 # リポジトリーの追加
+tap homebrew/versions
 tap phinze/homebrew-cask
 tap sanemat/font
 # パッケージのインストール
