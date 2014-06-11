@@ -8,6 +8,7 @@ tap phinze/homebrew-cask
 tap sanemat/font
 # パッケージのインストール
 install git
+install maven31
 install ricty
 install brew-cask
 # アプリケーションのインストール
