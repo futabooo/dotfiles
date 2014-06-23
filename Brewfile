@@ -12,6 +12,8 @@ install maven31
 install ricty
 install brew-cask
 # アプリケーションのインストール
+cask install java6
+cask install java7
 cask install android-studio
 cask install bettertouchtool
 cask install caffeine
@@ -23,6 +25,7 @@ cask install genymotion
 cask install google-chrome
 cask insatll google-japanese-ime
 cask install iterm2
+cask install intellij-idea
 cask install keepassx
 cask install keyremap4macbook
 cask install pckeyboardhack
