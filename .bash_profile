@@ -1,3 +1,2 @@
-if [ -f ~/.bashrc ]; then
-  . ~/.bashrc
-fi
+# load .bashrc
+source "$HOME/.bashrc" 2>/dev/null
