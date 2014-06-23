@@ -8,3 +8,11 @@ export M2=$M2_HOME/bin
 export ANDROID_HOME=$HOME/android-sdk
 export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi

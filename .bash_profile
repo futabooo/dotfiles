@@ -1,2 +1,8 @@
+# .bash_profile
+
 # load .bashrc
-source "$HOME/.bashrc" 2>/dev/null
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
+export PATH=$HOME/bin:$PATH
