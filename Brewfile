@@ -39,6 +39,8 @@ cask install sublime-text
 cask install virtualbox
 cask install xtrafinder
 cask install yorufukurou
+# brew caskでインストールしたアプリをAlfredで開けるようにする
+cask alfred link
 # 不要なファイル削除
 cleanup
 cask cleanup
