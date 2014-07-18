@@ -9,12 +9,12 @@ tap sanemat/font
 # パッケージのインストール
 install git
 install hub
-install maven31
+install maven
 install ricty
 install brew-cask
 # アプリケーションのインストール
-cask install java6
-cask install java7
+#cask install java6
+#cask install java7
 cask install alfred
 cask install android-studio
 cask install bettertouchtool
