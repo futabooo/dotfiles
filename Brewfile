@@ -5,6 +5,7 @@ upgrade
 # リポジトリーの追加
 tap homebrew/versions
 tap phinze/homebrew-cask
+tap caskroom/homebrew-versions
 tap sanemat/font
 # パッケージのインストール
 install git
