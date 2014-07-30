@@ -12,6 +12,8 @@ install hub
 install maven
 install ricty
 install brew-cask
+# caskを更新
+cask update
 # アプリケーションのインストール
 #cask install java6
 #cask install java7
