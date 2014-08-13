@@ -12,7 +12,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " add plugins
 NeoBundle 'w0ng/vim-hybrid'
-
+NeoBundle 'sudo.vim'
 
 filetype plugin on
 
