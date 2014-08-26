@@ -9,6 +9,8 @@ tap caskroom/homebrew-versions
 tap sanemat/font
 # パッケージのインストール
 install git
+install groovy
+install gradle
 install hub
 install maven
 install ricty
