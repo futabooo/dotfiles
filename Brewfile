@@ -39,6 +39,7 @@ cask install pckeyboardhack
 cask install skitch
 cask install skype
 cask install sophos-anti-virus-home-edition
+cask install sourcetree
 cask install startninja
 cask install sublime-text3
 cask install virtualbox
