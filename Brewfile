@@ -18,8 +18,8 @@ install brew-cask
 # caskを更新
 cask update
 # アプリケーションのインストール
-#cask install java6
-#cask install java7
+cask install java6
+cask install java7
 cask install alfred
 cask install android-studio
 cask install bettertouchtool
