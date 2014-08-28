@@ -29,6 +29,7 @@ cask install clipmenu
 cask install dropbox
 cask install evernote
 cask install filezilla
+cask install firefox-ja
 cask install genymotion
 cask install google-chrome
 cask insatll google-japanese-ime
