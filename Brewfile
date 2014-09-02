@@ -35,9 +35,8 @@ cask install google-chrome
 cask insatll google-japanese-ime
 cask install iterm2
 cask install intellij-idea
+cask install karabiner
 cask install keepassx
-cask install keyremap4macbook
-cask install pckeyboardhack
 cask install skitch
 cask install skype
 cask install sophos-anti-virus-home-edition
