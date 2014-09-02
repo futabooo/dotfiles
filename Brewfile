@@ -37,11 +37,12 @@ cask install iterm2
 cask install intellij-idea
 cask install karabiner
 cask install keepassx
+cask install seil
 cask install skitch
 cask install skype
+cask install slack
 cask install sophos-anti-virus-home-edition
 cask install sourcetree
-cask install seil
 cask install startninja
 cask install sublime-text3
 cask install virtualbox
