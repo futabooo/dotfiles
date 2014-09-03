@@ -11,3 +11,6 @@ do
 	echo "シンボリックリンクをはりました: $file"
   fi
 done
+
+# ターミナルの不可視項目を表示
+defaults write com.apple.finder AppleShowAllFiles -boolean true
