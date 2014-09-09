@@ -15,6 +15,7 @@ install hub
 install maven
 install ricty
 install brew-cask
+install tig
 install wget
 # caskを更新
 cask update
