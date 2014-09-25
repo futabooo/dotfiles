@@ -35,6 +35,7 @@ cask install firefox-ja
 cask install genymotion
 cask install google-chrome
 cask insatll google-japanese-ime
+cask install hoster
 cask install iterm2
 cask install intellij-idea
 cask install karabiner
