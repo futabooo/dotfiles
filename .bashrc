@@ -9,6 +9,9 @@ export GRADLE_HOME=/usr/local/Cellar/gradle/2.0/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
+export PATH=$PATH:$HOME/gsutil
+
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
