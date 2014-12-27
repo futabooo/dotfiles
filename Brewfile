@@ -3,6 +3,7 @@ update
 # Fomulaを更新
 upgrade
 # リポジトリーの追加
+tap homebrew/binary
 tap homebrew/versions
 tap phinze/homebrew-cask
 tap caskroom/homebrew-versions
@@ -12,6 +13,7 @@ install git
 install groovy
 install gradle
 install hub
+install jad
 install maven
 install ricty
 install brew-cask
