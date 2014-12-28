@@ -9,6 +9,7 @@ tap phinze/homebrew-cask
 tap caskroom/homebrew-versions
 tap sanemat/font
 # パッケージのインストール
+install ansible
 install git
 install groovy
 install gradle
