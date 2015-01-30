@@ -4,7 +4,7 @@
 #type brew >/dev/null 2>&1 && export PATH=$brew:${PATH//$brew:/}
 
 export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.7"`
-export M2_HOME=/usr/local/Cellar/maven/3.2.2/libexec
+export M2_HOME=/usr/local/Cellar/maven/3.2.5/libexec
 export M2=$M2_HOME/bin
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.0/libexec
 export ANDROID_HOME=$HOME/android-sdk
