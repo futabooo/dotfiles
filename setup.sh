@@ -14,3 +14,6 @@ done
 
 # ターミナルの不可視項目を表示
 defaults write com.apple.finder AppleShowAllFiles -boolean true
+
+# brew bundle
+brew tap homebrew/boneyard
