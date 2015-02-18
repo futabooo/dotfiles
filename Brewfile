@@ -25,11 +25,11 @@ cask update
 # アプリケーションのインストール
 cask install java6
 cask install java7
+cask install java8
 cask install alfred
 cask install android-studio
 cask install bettertouchtool
 cask install caffeine
-cask install cheatsheet
 cask install clipmenu
 cask install dropbox
 cask install evernote
