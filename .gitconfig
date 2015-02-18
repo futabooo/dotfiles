@@ -16,3 +16,7 @@
 	st =status
 	su = submodule update
     
+[credential]
+	helper = cache
+[core]
+	editor = vim
