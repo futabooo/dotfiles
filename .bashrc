@@ -13,6 +13,9 @@ export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 export PATH=$PATH:$HOME/gsutil
 
+export HISTSIZE=2000
+export HISTCONTROL=ignoredups
+
 
 alias rm='rm -i'
 alias cp='cp -i'
