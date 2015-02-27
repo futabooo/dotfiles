@@ -20,6 +20,8 @@ install ricty
 install brew-cask
 install tig
 install wget
+#
+install Caskroom/cask/xquartz
 # caskを更新
 cask update
 # アプリケーションのインストール
