@@ -31,6 +31,7 @@ cask install android-studio
 cask install bettertouchtool
 cask install caffeine
 cask install clipmenu
+cask install dash
 cask install dropbox
 cask install evernote
 cask install filezilla
