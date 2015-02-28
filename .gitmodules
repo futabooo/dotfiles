@@ -1,3 +1,6 @@
 [submodule ".vim/bundle/neobundle.vim"]
 	path = .vim/bundle/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim.git
+[submodule ".zsh/oh-my-zsh-solarized-powerline-theme"]
+	path = .zsh/oh-my-zsh-solarized-powerline-theme
+	url = https://github.com/KuoE0/oh-my-zsh-solarized-powerline-theme.git

@@ -12,6 +12,10 @@ do
   fi
 done
 
+# oh-my-zshのテーマを設定
+THEME=solarized-powerline.zsh-theme
+ln -s $HOME/dotfiles/oh-my-zsh-solarized-powerline-theme/$THEME $HOME/.oh-my-zsh/themes
+
 # ターミナルの不可視項目を表示
 defaults write com.apple.finder AppleShowAllFiles -boolean true
 
