@@ -22,3 +22,6 @@ $ brew bundle
 $ cp -f /usr/local/Cellar/ricty/3.2.4/share/fonts/Ricty*.ttf ~/Library/Fonts/
 $ fc-cache -vf
 ```
+
+### Create Ricty for powerline
+http://qiita.com/jpshadowapps/items/d4178daf45c99e653996
