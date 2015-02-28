@@ -20,6 +20,7 @@ install ricty
 install brew-cask
 install tig
 install wget
+install zsh
 #
 install Caskroom/cask/xquartz
 # caskを更新
@@ -41,7 +42,7 @@ cask install firefox-ja
 cask install genymotion
 cask install google-chrome
 cask insatll google-japanese-ime
-cask install hoster
+#cask install hoster
 cask install iterm2
 cask install intellij-idea
 cask install karabiner
