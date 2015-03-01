@@ -10,6 +10,8 @@ tap caskroom/homebrew-versions
 tap sanemat/font
 # パッケージのインストール
 install ansible
+install boot2docker
+install docker
 install git
 install groovy
 install gradle
