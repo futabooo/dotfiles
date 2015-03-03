@@ -13,6 +13,7 @@ install ansible
 install boot2docker
 install docker
 install git
+install go
 install groovy
 install gradle
 install hub
