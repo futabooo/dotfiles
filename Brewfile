@@ -36,6 +36,7 @@ cask install alfred
 cask install android-studio
 cask install bettertouchtool
 cask install caffeine
+cask install charles
 cask install clipmenu
 cask install dash
 cask install dropbox
