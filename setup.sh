@@ -24,4 +24,4 @@ done
 defaults write com.apple.finder AppleShowAllFiles -boolean true
 
 # brew bundle
-brew tap homebrew/boneyard
+brew tap homebrew/brewdler
