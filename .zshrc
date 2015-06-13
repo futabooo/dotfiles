@@ -48,7 +48,7 @@ ZSH_THEME="solarized-powerline"
 plugins=(git)
 
 # User configuration
-export JAVA_HOME=`/System/Library/Frameworks/JavaVM.framework/Versions/A/Commands/java_home -v "1.7"`
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export M2_HOME=/usr/local/Cellar/maven/3.2.5/libexec
 export M2=$M2_HOME/bin
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.0/libexec
