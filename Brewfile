@@ -1,70 +1,66 @@
-# HomeBrewを最新版にアップデート
-update
-# Fomulaを更新
-upgrade
 # リポジトリーの追加
-tap homebrew/binary
-tap homebrew/versions
-tap phinze/homebrew-cask
-tap caskroom/homebrew-versions
-tap sanemat/font
+tap 'caskroom/cask'
+tap 'caskroom/versions'
+tap 'homebrew/brewdler'
+tap 'sanemat/font'
 # パッケージのインストール
-install ansible
-install boot2docker
-install docker
-install git
-install go
-install groovy
-install gradle
-install hub
-install jad
-install maven
-install ricty
-install brew-cask
-install tig
-install wget
-install zsh
-#
-install Caskroom/cask/xquartz
-# caskを更新
-cask update
-# アプリケーションのインストール
-cask install java6
-cask install java7
-cask install java
-cask install alfred
-cask install android-studio
-cask install bettertouchtool
-cask install caffeine
-cask install charles
-cask install clipmenu
-cask install dash
-cask install dropbox
-cask install evernote
-cask install filezilla
-cask install firefox-ja
-cask install genymotion
-cask install google-chrome
-cask insatll google-japanese-ime
-#cask install hoster
-cask install hyperswitch
-cask install iterm2
-cask install intellij-idea
-cask install karabiner
-cask install keepassx
-cask install seil
-cask install skitch
-cask install skype
-cask install slack
-cask install sophos-anti-virus-home-edition
-cask install sourcetree
-cask install startninja
-cask install sublime-text3
-cask install virtualbox
-cask install xtrafinder
-cask install yorufukurou
-# brew caskでインストールしたアプリをAlfredで開けるようにする
-cask alfred link
-# 不要なファイル削除
-cleanup
-cask cleanup
+brew 'pkg-config'
+brew 'libpng'
+brew 'freetype'
+brew 'fontconfig'
+brew 'pixman'
+brew 'gettext'
+brew 'libffi'
+brew 'glib'
+brew 'cairo'
+brew 'zeromq'
+brew 'czmq'
+brew 'libtool'
+brew 'icu4c'
+brew 'git'
+brew 'gobject-introspection'
+brew 'harfbuzz'
+brew 'pango'
+brew 'jpeg'
+brew 'libtiff'
+brew 'fontforge'
+brew 'gdbm'
+brew 'gradle'
+brew 'maven'
+brew 'openssl'
+brew 'readline'
+brew 'sqlite'
+brew 'python'
+brew 'tig'
+brew 'wget'
+brew 'caskroom/cask/brew-cask'
+brew 'sanemat/font/ricty'
+# アプリケーションのインストール	
+cask 'java6'
+cask 'java7'
+cask 'java'
+cask 'xquartz'
+cask 'alfred'
+cask 'android-studio'
+cask 'bettertouchtool'
+cask 'caffeine'
+cask 'charles'
+cask 'clipmenu'
+cask 'dash'
+cask 'dropbox'
+cask 'evernote'
+cask 'genymotion'
+cask 'google-chrome'
+cask 'google-japanese-ime'
+cask 'hyperswitch'
+cask 'intellij-idea'
+cask 'iterm2'
+cask 'karabiner'
+cask 'keepassx'
+cask 'seil'
+cask 'skitch'
+cask 'slack'
+cask 'sophos-anti-virus-home-edition'
+cask 'sublime-text3'
+cask 'virtualbox'
+cask 'xtrafinder'
