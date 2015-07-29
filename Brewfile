@@ -3,6 +3,7 @@ tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'homebrew/brewdler'
 tap 'sanemat/font'
+tap 'peco/peco'
 # パッケージのインストール
 brew 'pkg-config'
 brew 'libpng'

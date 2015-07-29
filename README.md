@@ -23,5 +23,9 @@ $ cp -f /usr/local/Cellar/ricty/3.2.4/share/fonts/Ricty*.ttf ~/Library/Fonts/
 $ fc-cache -vf
 ```
 
+## adb-peco
+$ cd $ANDROID_HOME
+$ git clone https://github.com/tomorrowkey/adb-peco.git
+
 ### Create Ricty for powerline
 http://qiita.com/jpshadowapps/items/d4178daf45c99e653996
