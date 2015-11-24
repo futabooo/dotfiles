@@ -1,0 +1,9 @@
+1448407787.483944|ASL|closing previous instance of BetterTouchTool relaunch|
+1448407797.076914|LAUNCH|DIDLaunch|
+1448407807.736657|M|register magic trackpad|
+1448407832.799013|STDEV|80|
+1448407833.861396|ASW|b78355abfd5094bc|
+1448407835.312899|M|checking|
+1448407835.375565|M|checking|
+1448407836.157979|ASL|Bonjour Service Published: domain(local.) type(_bttremote._tcp.) name(futaiMac) port(57029)|
+1448407837.272938|M|checking|
