@@ -35,7 +35,6 @@ brew 'python'
 brew 'tig'
 brew 'wget'
 brew 'caskroom/cask/brew-cask'
-brew 'sanemat/font/ricty'
 # アプリケーションのインストール	
 cask 'java6'
 cask 'java7'
