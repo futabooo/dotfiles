@@ -25,3 +25,6 @@ defaults write com.apple.finder AppleShowAllFiles -boolean true
 
 # brew bundle
 brew tap homebrew/brewdler
+
+# BetterTouchTool Settings
+ln -s $HOME/dotfiles/BetterTouchTool $HOME/Library/Application\ Support/BetterTouchTool
