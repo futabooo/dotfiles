@@ -4,3 +4,5 @@
 .vim/.netrwhist
 !.vim/bundle/neobundle.vim
 
+# BetterTouchTool
+BetterTouchTool/Logs/*
