@@ -20,11 +20,17 @@ do
   fi
 done
 
-# ターミナルの不可視項目を表示
+# show invisible item of Terminal
 defaults write com.apple.finder AppleShowAllFiles -boolean true
 
-# brew bundle
-brew tap homebrew/brewdler
+# install homebrew for ElCapitan
+# https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/El_Capitan_and_Homebrew.md
+if [ -a /usr/local ]; then
+  sudo chown -R $(whoami):admin /usr/local
+else
+  sudo mkdir /usr/local && sudo chflags norestricted /usr/local && sudo chown -R $(whoami):admin /usr/local
+fi
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # BetterTouchTool Settings
 ln -s $HOME/dotfiles/BetterTouchTool $HOME/Library/Application\ Support/BetterTouchTool
