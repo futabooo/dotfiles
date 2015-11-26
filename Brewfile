@@ -1,69 +1,47 @@
-# リポジトリーの追加
+cask_args appdir: '/Applications'
+
+# brewcask
 tap 'caskroom/cask'
-tap 'caskroom/versions'
-tap 'homebrew/brewdler'
-tap 'sanemat/font'
-tap 'peco/peco'
-# パッケージのインストール
-brew 'pkg-config'
-brew 'libpng'
-brew 'freetype'
-brew 'fontconfig'
-brew 'pixman'
-brew 'gettext'
-brew 'libffi'
-brew 'glib'
-brew 'cairo'
-brew 'zeromq'
-brew 'czmq'
-brew 'libtool'
-brew 'icu4c'
-brew 'git'
-brew 'gobject-introspection'
-brew 'harfbuzz'
-brew 'pango'
-brew 'jpeg'
-brew 'libtiff'
-brew 'fontforge'
-brew 'gdbm'
-brew 'gradle'
-brew 'maven'
-brew 'openssl'
-brew 'readline'
-brew 'sqlite'
-brew 'python'
-brew 'tig'
-brew 'wget'
 brew 'caskroom/cask/brew-cask'
-# アプリケーションのインストール	
+
+#
+tap 'caskroom/versions'
+
+# Brew Bundle
+tap 'homebrew/brewdler'
+
+# Java6, java7, java8 
 cask 'java6'
 cask 'java7'
 cask 'java'
-cask 'xquartz'
+
+# tig
+brew 'readline'
+brew 'tig'
+
+# Genymotion
+cask 'virtualbox'
+cask 'genymotion'
+
+# GUI Applications
 cask 'alfred'
 cask 'android-studio'
-cask 'android-studio-canary'
 cask 'bettertouchtool'
 cask 'caffeine'
-cask 'charles'
 cask 'clipmenu'
-cask 'dash'
 cask 'dropbox'
 cask 'evernote'
-cask 'genymotion'
-cask 'gitter'
 cask 'google-chrome'
 cask 'google-japanese-ime'
 cask 'hyperswitch'
-cask 'intellij-idea'
 cask 'iterm2'
 cask 'karabiner'
 cask 'keepassx'
-cask 'kobito'
-cask 'night-owl'
 cask 'seil'
-cask 'skitch'
 cask 'slack'
 cask 'sublime-text3'
-cask 'virtualbox'
-cask 'xtrafinder'
+cask 'night-owl'
+
+# Ricty for powerline
+tap 'sanemat/font'
+brew 'ricty', args: ['powerline', 'vim-powerline']
