@@ -5,4 +5,4 @@
 !.vim/bundle/neobundle.vim
 
 # BetterTouchTool
-./BetterTouchTool/Logs/*
+BetterTouchTool/Logs
