@@ -49,6 +49,7 @@ plugins=(git)
 
 # User configuration
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 export M2_HOME=/usr/local/Cellar/maven/3.3.3/libexec
 export M2=$M2_HOME/bin
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
