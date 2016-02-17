@@ -48,13 +48,15 @@ ZSH_THEME="solarized-powerline"
 plugins=(git)
 
 # User configuration
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
+export JAVA_HOME=${JAVA8_HOME}
 export M2_HOME=/usr/local/Cellar/maven/3.3.3/libexec
 export M2=$M2_HOME/bin
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk
+export GOPATH=$HOME/.go
 export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/21.1.2:${ANDROID_HOME}/adb-peco/bin
 
 export DOCKER_CERT_PATH=/Users/futabooo/.boot2docker/certs/boot2docker-vm
