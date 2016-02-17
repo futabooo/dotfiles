@@ -56,7 +56,7 @@ export M2=$M2_HOME/bin
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk
-export GOPATH=$HOME/.go
+export GOPATH=$HOME/dev/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/21.1.2:${ANDROID_HOME}/adb-peco/bin
 
