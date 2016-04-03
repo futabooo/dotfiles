@@ -1,3 +1,9 @@
+# history settings
+export HISTFILE=${ZDOTDIR}/.zsh_history
+export HISTSIZE=50000
+export SAVEHIST=50000
+export HISTCONTROL=ignoredups
+
 export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
@@ -24,9 +30,6 @@ export EDITOR='vi'
 export SHELL='zsh'
 
 export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/21.1.2:${ANDROID_HOME}/adb-peco/bin
-
-export HISTSIZE=2000
-export HISTCONTROL=ignoredups
 
 alias rm='rm -i'
 alias cp='cp -i'
