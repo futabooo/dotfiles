@@ -1,3 +1,7 @@
+# completion settings
+autoload -Uz compinit
+compinit -u
+
 # history settings
 export HISTFILE=${ZDOTDIR}/.zsh_history
 export HISTSIZE=50000
