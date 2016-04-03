@@ -3,7 +3,7 @@ autoload -Uz compinit
 compinit -u
 
 # history settings
-export HISTFILE=${ZDOTDIR}/.zsh_history
+export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=50000
 export SAVEHIST=50000
 export HISTCONTROL=ignoredups
