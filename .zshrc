@@ -23,10 +23,6 @@ export SHELL='zsh'
 
 export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/21.1.2:${ANDROID_HOME}/adb-peco/bin
 
-export DOCKER_CERT_PATH=/Users/futabooo/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
-export DOCKER_HOST=tcp://192.168.59.103:2376
-
 export HISTSIZE=2000
 export HISTCONTROL=ignoredups
 
