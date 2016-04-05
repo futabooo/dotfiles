@@ -8,6 +8,30 @@ export HISTSIZE=50000
 export SAVEHIST=50000
 export HISTCONTROL=ignoredups
 
+# prompt
+NAME_COLOR_FG="%{[38;5;031m%}"
+NAME_COLOR_BG="%{[30;48;5;250m%}"
+HOST_COLOR_FG="%{[38;5;062m%}"
+AT_COLOR_FG="%{[38;5;100m%}"
+TIME_COLOR_FG="%{[38;5;015m%}"
+TIME_COLOR_BG="%{[30;48;5;012m%}"
+COLOR_END="%{[0m%}"
+PROMPT="${NAME_COLOR_BG}${NAME_COLOR_FG}%n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %~
+_> "
+
+# vcs_info
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+
+zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
+zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
+
+function _update_vcs_info_msg() {
+  LANG=en_US.UTF-8 vcs_info
+  RPROMPT="${vcs_info_msg_0_}"
+}
+add-zsh-hook precmd _update_vcs_info_msg
+
 export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
