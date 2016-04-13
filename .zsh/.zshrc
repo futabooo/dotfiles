@@ -42,23 +42,22 @@ export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk
 
-## Ruby
-export GEM_HOME=$HOME/.gems
-
-## node
-export NVM_DIR=$HOME/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-## golang
-export GOPATH=$HOME/dev/gopath1.5.3
-export GOROOT=/usr/local/go1.5.3
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH%
+## golong
+export GOPATH=$HOME/dev/eure/gopath1.5.3
 
 export EDITOR='vi'
+eval "$(direnv hook zsh)"
 export SHELL='zsh'
 
-export PATH=$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/21.1.2:${ANDROID_HOME}/adb-peco/bin
+export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/21.1.2:${ANDROID_HOME}/adb-peco/bin
 
+## anyenv
+if [ -d $HOME/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+fi
+
+# alias
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
