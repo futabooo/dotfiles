@@ -3,10 +3,10 @@ autoload -Uz compinit
 compinit -u
 
 # history settings
-export HISTFILE=${HOME}/.zsh_history
+export HISTFILE=${HOME}/.zsh/.zsh_history
 export HISTSIZE=50000
 export SAVEHIST=50000
-export HISTCONTROL=ignoredups
+setopt hist_ignore_dups
 
 # prompt
 NAME_COLOR_FG="%{[38;5;031m%}"
