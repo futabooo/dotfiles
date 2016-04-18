@@ -36,8 +36,6 @@ export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 export JAVA_HOME=${JAVA8_HOME}
-export M2_HOME=/usr/local/Cellar/maven/3.3.3/libexec
-export M2=$M2_HOME/bin
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
@@ -64,4 +62,3 @@ alias mv='mv -i'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
-source ~/.tmuxinator/tmuxinator.zsh
