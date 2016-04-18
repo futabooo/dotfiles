@@ -40,7 +40,7 @@ export M2_HOME=/usr/local/Cellar/maven/3.3.3/libexec
 export M2=$M2_HOME/bin
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
-export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk
+export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
 
 ## golong
 export GOPATH=$HOME/dev/eure/gopath1.5.3
