@@ -43,7 +43,7 @@ export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
 
 ## golong
-export GOPATH=$HOME/dev/eure/gopath1.5.3
+export GOPATH=$HOME/dev/eure/gopath1.6.0
 
 export EDITOR='vi'
 eval "$(direnv hook zsh)"
