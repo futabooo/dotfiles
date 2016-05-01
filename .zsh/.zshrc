@@ -7,7 +7,10 @@ export SAVEHIST=50000
 setopt hist_ignore_dups
 # share command history data
 setopt share_history
-
+# auto directory pushd that you can get dirs list by 'cd -[tab]'
+setopt auto_pushd
+# igonre duplication dir list
+setopt pushd_ignore_dups
 
 ## Default shell configuration
 #
@@ -26,20 +29,24 @@ PROMPT="${NAME_COLOR_BG}${NAME_COLOR_FG}%n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m $
 %(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!(*'-') <!(*;-;%)? <) ${COLOR_END} "
 PROMPT2="[%n]>"
 SPROMPT="${SUGGEST_COLOR}${suggest}(*'~'%)? < もしかして%B%r%b ${SUGGEST_COLOR}かな? [そう!(y), 違う!(n),a,e]:${COLOR_END} "
+# set ls color
+export LSCOLORS=exfxcxdxbxegedabagacad
+export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 # completion configuration 
 autoload -U compinit
 compinit
 # auto change directory
 setopt auto_cd
-# auto directory pushd that you can get dirs list by 'cd -[tag]'
-setopt auto_pushd
 # command correct edition before aech completion attempt
 setopt correct
 # no remove postfix slash of command line
 setopt noautoremoveslash
 # use a regular expression of PCRE compatible
 setopt re_match_pcre
-
+# select completion with the cursor keys
+zstyle ':completion:*:default' menu select=2
 
 ## vcs_info
 #
@@ -65,8 +72,6 @@ export JAVA_HOME=${JAVA8_HOME}
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
-
-# golong
 export GOPATH=$HOME/dev/eure/gopath1.6.0
 
 export EDITOR='vi'
@@ -86,6 +91,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 ## Alias configuration
 #
+alias ls='ls -G'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
