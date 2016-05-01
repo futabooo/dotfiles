@@ -1,25 +1,48 @@
-# completion settings
-autoload -Uz compinit
-compinit -u
-
-# history settings
+## Command history configuration
+#
 export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=50000
 export SAVEHIST=50000
+# ignore duplication command history list
 setopt hist_ignore_dups
+# share command history data
+setopt share_history
 
-# prompt
+
+## Default shell configuration
+#
+# set prompt
 NAME_COLOR_FG="%{[38;5;031m%}"
 NAME_COLOR_BG="%{[30;48;5;250m%}"
 HOST_COLOR_FG="%{[38;5;062m%}"
 AT_COLOR_FG="%{[38;5;100m%}"
 TIME_COLOR_FG="%{[38;5;015m%}"
 TIME_COLOR_BG="%{[30;48;5;012m%}"
+SUCCES_COLOR="%{[38;5;040m%}"
+FALSE_COLOR="%{[38;5;033m%}"
+SUGGEST_COLOR="%{[38;5;001m%}"
 COLOR_END="%{[0m%}"
 PROMPT="${NAME_COLOR_BG}${NAME_COLOR_FG}%n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %~
-_> "
+%(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!(*'-') <!(*;-;%)? <) ${COLOR_END} "
+PROMPT2="[%n]>"
+SPROMPT="${SUGGEST_COLOR}${suggest}(*'~'%)? < もしかして%B%r%b ${SUGGEST_COLOR}かな? [そう!(y), 違う!(n),a,e]:${COLOR_END} "
+# completion configuration 
+autoload -U compinit
+compinit
+# auto change directory
+setopt auto_cd
+# auto directory pushd that you can get dirs list by 'cd -[tag]'
+setopt auto_pushd
+# command correct edition before aech completion attempt
+setopt correct
+# no remove postfix slash of command line
+setopt noautoremoveslash
+# use a regular expression of PCRE compatible
+setopt re_match_pcre
 
-# vcs_info
+
+## vcs_info
+#
 autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 
@@ -32,6 +55,9 @@ function _update_vcs_info_msg() {
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
+
+## Environment variable configuration
+#
 export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
@@ -40,7 +66,7 @@ export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
 
-## golong
+# golong
 export GOPATH=$HOME/dev/eure/gopath1.6.0
 
 export EDITOR='vi'
@@ -49,16 +75,23 @@ export SHELL='zsh'
 
 export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/23.0.3:${ANDROID_HOME}/adb-peco/bin
 
-## anyenv
+# anyenv
 if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
 fi
 
-# alias
+# Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+## Alias configuration
+#
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+## Function configuration
+#
+function echoColors() {
+  for c in {000..255};do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
+}
