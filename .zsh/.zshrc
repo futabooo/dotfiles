@@ -92,7 +92,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 ## Alias configuration
 #
 alias ls='ls -G'
-alias rm='mv -i ~/.Trash'
+alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
