@@ -17,7 +17,7 @@
 	su = submodule update
     
 [credential]
-	helper = cache
+	helper = osxkeychain
 [core]
 	editor = vim
 [user]
