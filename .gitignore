@@ -1,5 +1,7 @@
 .DS_Store
 
+.zsh/.zsh_history
+
 .vim/bundle/*
 .vim/.netrwhist
 !.vim/bundle/neobundle.vim

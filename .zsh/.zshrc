@@ -72,7 +72,7 @@ export JAVA_HOME=${JAVA8_HOME}
 export GRADLE_HOME=/usr/local/Cellar/gradle/2.4/libexec
 export ANDROID_HOME=$HOME/android-sdk
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
-export GOPATH=$HOME/dev/eure/gopath1.6.0
+export GOPATH=$HOME/dev
 
 export EDITOR='vi'
 eval "$(direnv hook zsh)"
@@ -101,3 +101,22 @@ alias mv='mv -i'
 function echoColors() {
   for c in {000..255};do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
 }
+
+function peco-src() {
+  local src=$(ghq list --full-path | peco --query "$LBUFFER")
+  if [ -n "$src" ]; then
+    BUFFER="cd $src"
+	zle accept-line
+  fi
+  zle -R -c
+}
+zle -N peco-src
+bindkey '^]' peco-src
+
+function peco-select-history() {
+  BUFFER=$(fc -l -r -n 1 | peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle redisplay
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
