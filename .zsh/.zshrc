@@ -114,7 +114,7 @@ zle -N peco-src
 bindkey '^]' peco-src
 
 function peco-select-history() {
-  BUFFER=$(fc -l -r -n 1 | peco --query "$LBUFFER")
+  BUFFER=$(history -n 1 | peco --query "$LBUFFER")
   CURSOR=$#BUFFER
   zle redisplay
 }
