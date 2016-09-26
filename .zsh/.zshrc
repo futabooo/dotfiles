@@ -4,7 +4,7 @@ export HISTFILE=${HOME}/.zsh_history
 export HISTSIZE=50000
 export SAVEHIST=50000
 # ignore duplication command history list
-setopt hist_ignore_dups
+setopt hist_ignore_all_dups
 # share command history data
 setopt share_history
 # auto directory pushd that you can get dirs list by 'cd -[tab]'
