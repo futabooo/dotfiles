@@ -13,11 +13,16 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " add plugins
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'sudo.vim'
+" ステータスラインの表示内容強化
+NeoBundle 'itchyny/lightline.vim'
 
 filetype plugin on
 
 NeoBundleCheck
 
+
+" □や◯文字が崩れなくする
+set ambiwidth=double
 
 " 文字コード・改行コード
 set encoding=utf-8
@@ -45,6 +50,34 @@ set smartcase
 " 検索時に最後まで行ったら最初に戻る
 set wrapscan
 
+" カーソルの左右移動で行末から次の行の行頭への移動が可能になる
+set whichwrap=b,s,h,l,<,>,[,],~
+" カーソル行ハイライト
+set cursorline
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=indent,eol,start
 
+" コマンドモードの補完
+set wildmenu
+" 保存するコマンド履歴の数
+set history=5000
+
+"" itchyny/lightline.vim settings
+set laststatus=2 " ステータスラインを常に表示
+set showmode " 現在のモードを表示
+set showcmd " 打ったコマンドをステータスラインの下に表示
+set ruler " ステータスラインの右側にカーソルの位置を表示する
+
+" ペースト時のインデントをよしなにする
+if &term =~ "xterm"
+  let &t_SI .= "\e[?2004h"
+  let &t_EI .= "\e[?2004l"
+  let &pastetoggle = "\e[201~"
+
+  function XTermPasteBegin(ret)
+    set paste
+	return a:ret
+  endfunction
+
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+endif
