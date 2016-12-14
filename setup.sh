@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# install oh-my-zsh
-curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-
-# set oh-my-zsh theme
-THEME=solarized-powerline.zsh-theme
-ln -s $HOME/dotfiles/.zsh/oh-my-zsh-solarized-powerline-theme/$THEME $HOME/.oh-my-zsh/themes
-
 # create dotfiles symbolic link
 DOT_FILES=( .vim .vimrc .gitconfig .bash_profile .bashrc .zshrc)
 
