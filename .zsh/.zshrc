@@ -78,7 +78,7 @@ export EDITOR='vi'
 eval "$(direnv hook zsh)"
 export SHELL='zsh'
 
-export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/build-tools/23.0.3:${ANDROID_HOME}/adb-peco/bin
+export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # anyenv
 if [ -d $HOME/.anyenv ] ; then
