@@ -1,5 +1,6 @@
 .DS_Store
 
+.zsh/.zcompdump
 .zsh/.zsh_history
 
 .vim/bundle/*

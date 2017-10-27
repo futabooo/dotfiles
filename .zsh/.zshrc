@@ -69,7 +69,7 @@ export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 export JAVA_HOME=${JAVA8_HOME}
-export ANDROID_HOME=$HOME/android-sdk
+export ANDROID_HOME=$HOME/android
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
 export GOPATH=$HOME/dev
 
