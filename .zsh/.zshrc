@@ -105,9 +105,9 @@ function echoColors() {
 }
 
 function peco-src() {
-  local src=$(ghq list --full-path | peco --query "$LBUFFER")
-  if [ -n "$src" ]; then
-    BUFFER="cd $src"
+  local dir=$(ghq list | peco --query "$LBUFFER")
+  if [ -n "$dir" ]; then
+    BUFFER="cd $GOPATH/src/$dir"
 	zle accept-line
   fi
   zle -R -c

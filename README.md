@@ -17,14 +17,6 @@ $ sh setup.sh
 ## http://brew.sh
 $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-## El Capitan
-## install to /opt
-$ cd /opt
-$ sudo mkdir homebrew
-$ sudo chown ${USER}:staff homebrew
-$ curl -L https://github.com/Homebrew/homebrew/tarball/master | tar xz --strip 1 -C homebrew
-# Add /opt/homebrew/bin to /etc/paths
-
 ## https://github.com/Homebrew/homebrew-boneyard/
 $ brew tap matsu-chara/brew-bundle
 $ brew bundle
