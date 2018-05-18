@@ -70,7 +70,6 @@ export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 export JAVA_HOME=${JAVA8_HOME}
 export ANDROID_HOME=$HOME/android
-export STUDIO_JDK=/Library/Java/JavaVirtualMachines/1.6.0.jdk
 export GOPATH=$HOME/dev
 
 export EDITOR='vi'
@@ -83,6 +82,10 @@ export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-t
 if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
+  for D in `ls $HOME/.anyenv/envs`
+  do
+    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+  done
 fi
 
 # Added by the Heroku Toolbelt
