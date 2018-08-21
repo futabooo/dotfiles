@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # create dotfiles symbolic link
-DOT_FILES=( .vim .vimrc .gitconfig .bash_profile .bashrc .zsh)
+DOT_FILES=( .vim .vimrc .gitconfig .bash_profile .bashrc .zsh .zshenv)
 
 for file in ${DOT_FILES[@]}
 do
