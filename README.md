@@ -13,13 +13,10 @@ $ git submodule update
 ## setup
 $ sh setup.sh
 
-## install homebrew
-## http://brew.sh
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-## https://github.com/Homebrew/homebrew-boneyard/
-$ brew tap matsu-chara/brew-bundle
-$ brew bundle
+### change login shell
+$ sudo vi /etc/shells
+add `/usr/local/bin/zsh`
+$ chsh -s /usr/local/bin/zsh
 
 ## ricty
 #$ cp -f /usr/local/Cellar/ricty/3.2.4/share/fonts/Ricty*.ttf ~/Library/Fonts/
