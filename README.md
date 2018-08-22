@@ -31,8 +31,7 @@ $ cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
 $ fc-cache -vf
 
 ## adb-peco
-$ cd $ANDROID_HOME
-$ git clone https://github.com/tomorrowkey/adb-peco.git
+$ gem install adb-peco
 
 ### Create Ricty for powerline
 http://qiita.com/jpshadowapps/items/d4178daf45c99e653996
