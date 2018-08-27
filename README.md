@@ -19,11 +19,19 @@ add `/usr/local/bin/zsh`
 $ chsh -s /usr/local/bin/zsh
 
 ### install anyenv
+### https://github.com/riywo/anyenv
 $ cd
 $ git clone https://github.com/riywo/anyenv ~/.anyenv
 $ anyenv install rbenv
 $ anyenv install ndenv
 $ anyenv install goenv
+
+### install tmuxinator
+### https://github.com/tmuxinator/tmuxinator
+$ cd
+$ mkdir .tmuxinator
+$ cd .tmuxinator
+$ wget https://raw.github.com/aziz/tmuxinator/master/completion/tmuxinator.zsh
 
 ## ricty
 $ brew install --vim-powerline ricty
