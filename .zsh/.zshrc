@@ -48,6 +48,11 @@ setopt re_match_pcre
 # select completion with the cursor keys
 zstyle ':completion:*:default' menu select=2
 
+## for fastlane
+#
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 ## vcs_info
 #
 autoload -Uz vcs_info
@@ -61,7 +66,6 @@ function _update_vcs_info_msg() {
   RPROMPT="${vcs_info_msg_0_}"
 }
 add-zsh-hook precmd _update_vcs_info_msg
-
 
 ## Environment variable configuration
 #
