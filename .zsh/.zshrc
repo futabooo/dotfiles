@@ -76,13 +76,12 @@ export JAVA_HOME=${JAVA8_HOME}
 export ANDROID_HOME=$HOME/android
 export GOENV_DISABLE_GOPATH=1
 export GOPATH=$HOME/dev
-export FASTLANEPATH=$HOME/.fastlane
 
 export EDITOR='vi'
 eval "$(direnv hook zsh)"
 export SHELL='zsh'
 
-export PATH=/usr/local/sbin:$PATH:${FASTLANEPATH}/bin:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # anyenv
 if [ -d $HOME/.anyenv ] ; then
@@ -96,6 +95,9 @@ fi
 
 # Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# homebrew
+export PATH="/usr/local/sbin:$PATH"
 
 ## Alias configuration
 #
