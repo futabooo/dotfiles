@@ -72,7 +72,9 @@ add-zsh-hook precmd _update_vcs_info_msg
 export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
-export JAVA_HOME=${JAVA8_HOME}
+export JAVA11_HOME=$(/usr/libexec/java_home -v 11)
+export JAVA13_HOME=$(/usr/libexec/java_home -v 13)
+export JAVA_HOME=${JAVA11_HOME}
 export ANDROID_HOME=$HOME/android
 export GOENV_DISABLE_GOPATH=1
 export GOPATH=$HOME/dev
