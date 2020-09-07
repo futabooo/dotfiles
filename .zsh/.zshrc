@@ -103,6 +103,7 @@ export PATH="/usr/local/sbin:$PATH"
 
 ## Alias configuration
 #
+alias ll='ls -lG'
 alias ls='ls -G'
 alias rm='rm -i'
 alias cp='cp -i'
