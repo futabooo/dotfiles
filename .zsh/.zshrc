@@ -110,6 +110,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias ij='open -b com.jetbrains.intellij'
 alias adb='adb-peco'
+alias k=kubectl
 
 ## Function configuration
 #
@@ -138,3 +139,6 @@ bindkey '^r' peco-select-history
 
 ## tmuxinator
 source ~/.tmuxinator/tmuxinator.zsh
+
+# kubectl
+source <(kubectl completion zsh)
