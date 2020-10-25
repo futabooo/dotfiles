@@ -11,6 +11,8 @@ setopt share_history
 setopt auto_pushd
 # igonre duplication dir list
 setopt pushd_ignore_dups
+# parameter expansion, command substitution and arithmetic expansion are performed in prompts
+setopt prompt_subst
 
 ## Default shell configuration
 #
@@ -25,7 +27,7 @@ SUCCES_COLOR="%{[38;5;040m%}"
 FALSE_COLOR="%{[38;5;033m%}"
 SUGGEST_COLOR="%{[38;5;001m%}"
 COLOR_END="%{[0m%}"
-PROMPT="${NAME_COLOR_BG}${NAME_COLOR_FG}%n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %~
+PROMPT="${NAME_COLOR_BG}${NAME_COLOR_FG}%n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %~ \${vcs_info_msg_0_}
 %(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!(*'-') <!(*;-;%)? <) ${COLOR_END} "
 PROMPT2="[%n]>"
 SPROMPT="${SUGGEST_COLOR}${suggest}(*'~'%)? < もしかして%B%r%b ${SUGGEST_COLOR}かな? [そう!(y), 違う!(n),a,e]:${COLOR_END} "
@@ -63,7 +65,6 @@ zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
 
 function _update_vcs_info_msg() {
   LANG=en_US.UTF-8 vcs_info
-  RPROMPT="${vcs_info_msg_0_}"
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
