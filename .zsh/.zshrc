@@ -1,22 +1,51 @@
-## Command history configuration
-#
-export HISTFILE=${ZDOTDIR}/.zsh_history
-export HISTSIZE=50000
-export SAVEHIST=50000
-# ignore duplication command history list
-setopt hist_ignore_all_dups
-# share command history data
-setopt share_history
-# auto directory pushd that you can get dirs list by 'cd -[tab]'
-setopt auto_pushd
-# igonre duplication dir list
-setopt pushd_ignore_dups
-# parameter expansion, command substitution and arithmetic expansion are performed in prompts
-setopt prompt_subst
+# zinit install {{{
+if [[ ! -f $HOME/.zsh/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zsh/.zinit" && command chmod g-rwX "$HOME/.zsh/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zsh/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
 
-## Default shell configuration
-#
-# set prompt
+source "$HOME/.zsh/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+# }}}
+
+# zinit basic plugins {{{
+zinit wait lucid light-mode for \
+  atinit"zicompinit; zicdreplay" \
+      zdharma/fast-syntax-highlighting \
+  atload"_zsh_autosuggest_start" \
+      zsh-users/zsh-autosuggestions \
+  blockf atpull'zinit creinstall -q .' \
+      zsh-users/zsh-completions
+# }}}
+
+# prompt {{{
+zinit ice lucid atload'!_zsh_git_prompt_precmd_hook' 
+zinit load woefe/git-prompt.zsh
+
+ZSH_GIT_PROMPT_FORCE_BLANK=1
+ZSH_GIT_PROMPT_SHOW_UPSTREAM="full"
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%B · %b"
+ZSH_THEME_GIT_PROMPT_SUFFIX="›"
+ZSH_THEME_GIT_PROMPT_SEPARATOR=" ‹"
+ZSH_THEME_GIT_PROMPT_BRANCH="⎇ %{$fg_bold[cyan]%}"
+ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL="%{$fg_bold[yellow]%}⟳ "
+ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%{$fg[yellow]%} ⤳ "
+ZSH_THEME_GIT_PROMPT_UPSTREAM_SUFFIX=""
+ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
+ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_no_bold[cyan]%}↓"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_no_bold[cyan]%}↑"
+ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}✖"
+ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}●"
+ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[red]%}✚"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="…"
+ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[blue]%}⚑"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
+
 NAME_COLOR_FG="%{[38;5;031m%}"
 NAME_COLOR_BG="%{[30;48;5;250m%}"
 HOST_COLOR_FG="%{[38;5;062m%}"
@@ -27,83 +56,88 @@ SUCCES_COLOR="%{[38;5;040m%}"
 FALSE_COLOR="%{[38;5;033m%}"
 SUGGEST_COLOR="%{[38;5;001m%}"
 COLOR_END="%{[0m%}"
-PROMPT="${NAME_COLOR_BG}${NAME_COLOR_FG}%n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %~ \${vcs_info_msg_0_}
-%(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!(*'-') <!(*;-;%)? <) ${COLOR_END} "
-PROMPT2="[%n]>"
-SPROMPT="${SUGGEST_COLOR}${suggest}(*'~'%)? < もしかして%B%r%b ${SUGGEST_COLOR}かな? [そう!(y), 違う!(n),a,e]:${COLOR_END} "
-# set ls color
-export LSCOLORS=exfxcxdxbxegedabagacad
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+KAO_1="(*'-'%)"
+KAO_2="(*;-;%)"
+KAO_3="(*'~'%)?"
 
-# completion configuration 
-autoload -U compinit
-compinit
-# auto change directory
-setopt auto_cd
-# command correct edition before aech completion attempt
+PROMPT=$'${NAME_COLOR_BG}${NAME_COLOR_FG} %n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %(?..%F{red}%?%f · ) %B%~%b$(gitprompt)\n%(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!${KAO_1} <!${KAO_2} <) ${COLOR_END} '
+RPROMPT=''
+SPROMPT='${SUGGEST_COLOR}${suggest}${KAO_3} < もしかして%B%r%b ${SUGGEST_COLOR}かな? [そう!(y), 違う!(n),a,e]:${COLOR_END} '
+# }}}
+
+# zsh options {{{
+## history
+export HISTFILE=${ZDOTDIR}/.zsh_history
+export HISTSIZE=50000
+export SAVEHIST=50000
+### ignore duplication command history list
+setopt hist_ignore_all_dups
+### share command history data
+setopt share_history
+### auto directory pushd that you can get dirs list by 'cd -[tab]'
+setopt auto_pushd
+### history list duplicates an older one, the older command is removed from the list
+setopt hist_ignore_all_dups
+### igonre duplication dir list
+setopt pushd_ignore_dups
+
+## completion
+autoload -Uz compinit && compinit
+### command correct edition before each completion attempt
 setopt correct
-# no remove postfix slash of command line
+### no remove postfix slash of command line
 setopt noautoremoveslash
-# use a regular expression of PCRE compatible
+### use a regular expression of PCRE compatible
 setopt re_match_pcre
-# select completion with the cursor keys
+### no beep
+setopt nolistbeep
+### select completion with the cursor keys
 zstyle ':completion:*:default' menu select=2
+# }}}
 
-## for fastlane
-#
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-## vcs_info
-#
-autoload -Uz vcs_info
-autoload -Uz add-zsh-hook
-
-zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
-zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
-
-function _update_vcs_info_msg() {
-  LANG=en_US.UTF-8 vcs_info
-}
-add-zsh-hook precmd _update_vcs_info_msg
-
-## Environment variable configuration
-#
+# environment variables {{{
+## java
 export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
 export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 export JAVA11_HOME=$(/usr/libexec/java_home -v 11)
 export JAVA14_HOME=$(/usr/libexec/java_home -v 14)
 export JAVA_HOME=${JAVA8_HOME}
+## android
 export ANDROID_HOME=$HOME/android
+## go
 export GOENV_DISABLE_GOPATH=1
 export GOPATH=$HOME/dev
-
+## fastlane
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+## other 
 export EDITOR='vi'
-eval "$(direnv hook zsh)"
 export SHELL='zsh'
-
+## path
 export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
-# anyenv
+## anyenv
 if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
-  for D in `ls $HOME/.anyenv/envs`
-  do
-    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
-  done
 fi
 
-# Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
-# homebrew
+## homebrew
 export PATH="/usr/local/sbin:$PATH"
 
-## Alias configuration
-#
+## tmuxinator
+source ~/.tmuxinator/tmuxinator.zsh
+
+## kubectl
+### see https://github.com/zdharma/zinit/issues/174 
+source <(kubectl completion zsh)
+zinit ice as"completion"
+zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
+# }}}
+
+## alias {{{
+alias la='ls -la'
 alias ll='ls -lG'
 alias ls='ls -G'
 alias rm='rm -i'
@@ -112,13 +146,10 @@ alias mv='mv -i'
 alias ij='open -b com.jetbrains.intellij'
 alias adb='adb-peco'
 alias k=kubectl
+# }}}
 
-## Function configuration
-#
-function echoColors() {
-  for c in {000..255};do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
-}
-
+# function {{{
+## ghqとpecoでリポジトリ検索
 function peco-src() {
   local dir=$(ghq list | peco --query "$LBUFFER")
   if [ -n "$dir" ]; then
@@ -130,6 +161,7 @@ function peco-src() {
 zle -N peco-src
 bindkey '^]' peco-src
 
+## pecoで履歴検索
 function peco-select-history() {
   BUFFER=$(history -n 1 | peco --query "$LBUFFER")
   CURSOR=$#BUFFER
@@ -137,9 +169,4 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
-
-## tmuxinator
-source ~/.tmuxinator/tmuxinator.zsh
-
-# kubectl
-source <(kubectl completion zsh)
+# }}}

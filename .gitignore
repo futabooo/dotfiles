@@ -2,13 +2,8 @@
 
 .zsh/.zcompdump
 .zsh/.zsh_history
+.zsh/.zinit/
 
 .vim/bundle/*
 .vim/.netrwhist
 !.vim/bundle/neobundle.vim
-
-# BetterTouchTool
-BetterTouchTool/Logs
-BetterTouchTool/bttdata2.oldVersionBackup*
-BetterTouchTool/bettertouchtool.bttlicense
-
