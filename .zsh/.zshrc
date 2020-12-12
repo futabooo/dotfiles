@@ -115,7 +115,7 @@ export LANG=en_US.UTF-8
 export EDITOR='vi'
 export SHELL='zsh'
 ## path
-export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
 
 ## anyenv
 if [ -d $HOME/.anyenv ] ; then
