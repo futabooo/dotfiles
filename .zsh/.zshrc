@@ -123,6 +123,9 @@ if [ -d $HOME/.anyenv ] ; then
   eval "$(anyenv init -)"
 fi
 
+## direnv
+eval "$(direnv hook zsh)"
+
 ## homebrew
 export PATH="/usr/local/sbin:$PATH"
 
