@@ -115,13 +115,16 @@ export LANG=en_US.UTF-8
 export EDITOR='vi'
 export SHELL='zsh'
 ## path
-export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
 
 ## anyenv
 if [ -d $HOME/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
 fi
+
+## direnv
+eval "$(direnv hook zsh)"
 
 ## homebrew
 export PATH="/usr/local/sbin:$PATH"
@@ -139,7 +142,6 @@ zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
 export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-
 # }}}
 
 ## alias {{{
