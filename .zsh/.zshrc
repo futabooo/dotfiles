@@ -102,7 +102,7 @@ export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
 export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
 export JAVA11_HOME=$(/usr/libexec/java_home -v 11)
 export JAVA15_HOME=$(/usr/libexec/java_home -v 15)
-export JAVA_HOME=${JAVA8_HOME}
+export JAVA_HOME=${JAVA11_HOME}
 ## android
 export ANDROID_HOME=$HOME/android
 ## go
