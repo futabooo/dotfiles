@@ -121,6 +121,7 @@ export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platfo
 if [[ -f /usr/local/opt/asdf/libexec/asdf.sh ]]; then
   source /usr/local/opt/asdf/libexec/asdf.sh
 fi
+export ASDF_CONFIG_FILE=$HOME/dotfiles/.asdfrc
 
 ## direnv
 eval "$(direnv hook zsh)"
