@@ -117,12 +117,6 @@ export SHELL='zsh'
 ## path
 export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
 
-## anyenv
-if [ -d $HOME/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-fi
-
 ## asdf
 if [[ -f /usr/local/opt/asdf/libexec/asdf.sh ]]; then
   source /usr/local/opt/asdf/libexec/asdf.sh
