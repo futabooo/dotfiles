@@ -123,6 +123,11 @@ if [ -d $HOME/.anyenv ] ; then
   eval "$(anyenv init -)"
 fi
 
+## asdf
+if [[ -f /usr/local/opt/asdf/libexec/asdf.sh ]]; then
+  source /usr/local/opt/asdf/libexec/asdf.sh
+fi
+
 ## direnv
 eval "$(direnv hook zsh)"
 
@@ -179,3 +184,4 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 # }}}
+
