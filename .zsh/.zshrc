@@ -115,7 +115,7 @@ export LANG=en_US.UTF-8
 export EDITOR='vi'
 export SHELL='zsh'
 ## path
-export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
+export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
 
 ## asdf
 if [[ -f /usr/local/opt/asdf/libexec/asdf.sh ]]; then
