@@ -1,8 +1,8 @@
 # zinit install {{{
 if [[ ! -f $HOME/.zsh/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
     command mkdir -p "$HOME/.zsh/.zinit" && command chmod g-rwX "$HOME/.zsh/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zsh/.zinit/bin" && \
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zsh/.zinit/bin" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
@@ -15,7 +15,7 @@ autoload -Uz _zinit
 # zinit basic plugins {{{
 zinit wait lucid light-mode for \
   atinit"zicompinit; zicdreplay" \
-      zdharma/fast-syntax-highlighting \
+      zdharma-continuum/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" \
       zsh-users/zsh-autosuggestions \
   blockf atpull'zinit creinstall -q .' \
