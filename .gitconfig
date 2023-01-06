@@ -20,12 +20,12 @@
 	helper = osxkeychain
 [core]
 	editor = vim
-	excludesfile = /Users/futabooo/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [user]
 	name = futabooo
 	email = takahiro.futagawa@gmail.com
 [ghq]
-	root = /Users/futabooo/dev/src
+	root = ~/dev/src
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true
