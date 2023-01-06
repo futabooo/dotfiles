@@ -177,5 +177,29 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+## gcloud のアクティブな設定を切り替える
+function gcloud-activate() {
+  name="$1"
+  echo "gcloud config configurations activate \"${name}\""
+  gcloud config configurations activate "${name}"
+}
+## 補完の候補の表示
+function gx-complete() {
+  _values $(gcloud config configurations list | awk '{print $1}')
+}
+## gcloud configurationsからpecoで切り替え
+function gx() {
+  name="$1"
+  if [ -z "$name" ]; then
+    line=$(gcloud config configurations list | peco)
+    name=$(echo "${line}" | awk '{print $1}')
+  else
+    line=$(gcloud config configurations list | grep "$name")
+  fi
+  project=$(echo "${line}" | awk '{print $4}')
+  gcloud-activate "${name}" "${project}"
+}
+compdef gx-complete gx
 # }}}
 
