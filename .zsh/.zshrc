@@ -117,20 +117,15 @@ export SHELL='zsh'
 ## path
 export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
 
+## homebrew
+export HOMEBREW_HOME="/opt/homebrew"
+export PATH=${HOMEBREW_HOME}/bin:${HOMEBREW_HOME}/sbin:$PATH
+
 ## asdf
-if [[ -f /usr/local/opt/asdf/libexec/asdf.sh ]]; then
-  source /usr/local/opt/asdf/libexec/asdf.sh
+if [[ -f ${HOMEBREW_HOME}/opt/asdf/libexec/asdf.sh ]]; then
+  source ${HOMEBREW_HOME}/opt/asdf/libexec/asdf.sh
 fi
 export ASDF_CONFIG_FILE=$HOME/dotfiles/.asdfrc
-
-## direnv
-eval "$(direnv hook zsh)"
-
-## homebrew
-export PATH="/usr/local/sbin:$PATH"
-
-## tmuxinator
-source ~/.tmuxinator/tmuxinator.zsh
 
 ## kubectl
 ### see https://github.com/zdharma/zinit/issues/174 
@@ -139,10 +134,14 @@ zinit ice as"completion"
 zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
 
 ## google-cloud-sdk from homebrew 
-export CLOUDSDK_PYTHON="/usr/local/opt/python@3.8/libexec/bin/python"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+source "${HOMEBREW_HOME}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "${HOMEBREW_HOME}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
 # }}}
+
+## direnv
+eval "$(direnv hook zsh)"
 
 ## alias {{{
 alias la='ls -la'
