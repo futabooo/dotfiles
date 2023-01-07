@@ -82,7 +82,9 @@ setopt hist_ignore_all_dups
 setopt pushd_ignore_dups
 
 ## completion
+fpath=($HOME/.zsh/Completion ${fpath})
 autoload -Uz compinit && compinit
+autoload -Uz _gx
 ### command correct edition before each completion attempt
 setopt correct
 ### no remove postfix slash of command line
@@ -184,10 +186,6 @@ function gcloud-activate() {
   echo "gcloud config configurations activate \"${name}\""
   gcloud config configurations activate "${name}"
 }
-## 補完の候補の表示
-function gx-complete() {
-  _values $(gcloud config configurations list | awk '{print $1}')
-}
 ## gcloud configurationsからpecoで切り替え
 function gx() {
   name="$1"
@@ -197,9 +195,7 @@ function gx() {
   else
     line=$(gcloud config configurations list | grep "$name")
   fi
-  project=$(echo "${line}" | awk '{print $4}')
-  gcloud-activate "${name}" "${project}"
+  gcloud-activate "${name}"
 }
-compdef gx-complete gx
 # }}}
 
