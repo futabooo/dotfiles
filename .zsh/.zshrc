@@ -60,12 +60,16 @@ KAO_1="(*'-'%)"
 KAO_2="(*;-;%)"
 KAO_3="(*'~'%)?"
 
-PROMPT=$'${NAME_COLOR_BG}${NAME_COLOR_FG} %n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %(?..%F{red}%?%f · ) %B%~%b$(gitprompt)\n%(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!${KAO_1} <!${KAO_2} <) ${COLOR_END} '
+PROMPT=$'${NAME_COLOR_BG}${NAME_COLOR_FG} %n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %(?..%F{red}%?%f · ) $(gcloud-current) %B%~%b$(gitprompt)\n%(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!${KAO_1} <!${KAO_2} <) ${COLOR_END} '
 RPROMPT=''
 SPROMPT='${SUGGEST_COLOR}${suggest}${KAO_3} < もしかして%B%r%b ${SUGGEST_COLOR}かな? [そう!(y), 違う!(n),a,e]:${COLOR_END} '
 # }}}
 
 # zsh options {{{
+## color
+export CLICOLOR=1
+export TERM=xterm-256color
+
 ## history
 export HISTFILE=${ZDOTDIR}/.zsh_history
 export HISTSIZE=50000
@@ -197,5 +201,13 @@ function gx() {
   fi
   gcloud-activate "${name}"
 }
+function gcloud-current() {
+    cat $HOME/.config/gcloud/active_config
+}
+# }}}
+
+# prompt {{{
+export STARSHIP_CONFIG=$HOME/dotfiles/starship//starship.toml
+eval "$(starship init zsh)"
 # }}}
 
