@@ -82,7 +82,9 @@ setopt hist_ignore_all_dups
 setopt pushd_ignore_dups
 
 ## completion
+fpath=($HOME/.zsh/Completion ${fpath})
 autoload -Uz compinit && compinit
+autoload -Uz _gx
 ### command correct edition before each completion attempt
 setopt correct
 ### no remove postfix slash of command line
@@ -178,5 +180,30 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+
+## gcloud のアクティブな設定を切り替える
+function gcloud-activate() {
+  name="$1"
+  echo "gcloud config configurations activate \"${name}\""
+  gcloud config configurations activate "${name}"
+}
+## gcloud configurationsからpecoで切り替え
+function gx() {
+  name="$1"
+  if [ -z "$name" ]; then
+    line=$(gcloud config configurations list | peco)
+    name=$(echo "${line}" | awk '{print $1}')
+  else
+    line=$(gcloud config configurations list | grep "$name")
+  fi
+  gcloud-activate "${name}"
+}
+function gcloud-current() {
+    cat $HOME/.config/gcloud/active_config
+}
 # }}}
 
+## PROMPT {{{
+export STARSHIP_CONFIG=$HOME/dotfiles/starship/starship.toml
+eval "$(starship init zsh)"
+## }}}
