@@ -13,56 +13,10 @@ autoload -Uz _zinit
 # }}}
 
 # zinit basic plugins {{{
-zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay" \
-      zdharma-continuum/fast-syntax-highlighting \
-  atload"_zsh_autosuggest_start" \
-      zsh-users/zsh-autosuggestions \
-  blockf atpull'zinit creinstall -q .' \
-      zsh-users/zsh-completions
-# }}}
-
-# prompt {{{
-zinit ice lucid atload'!_zsh_git_prompt_precmd_hook' 
-zinit load woefe/git-prompt.zsh
-
-ZSH_GIT_PROMPT_FORCE_BLANK=1
-ZSH_GIT_PROMPT_SHOW_UPSTREAM="full"
-
-ZSH_THEME_GIT_PROMPT_PREFIX="%B · %b"
-ZSH_THEME_GIT_PROMPT_SUFFIX="›"
-ZSH_THEME_GIT_PROMPT_SEPARATOR=" ‹"
-ZSH_THEME_GIT_PROMPT_BRANCH="⎇ %{$fg_bold[cyan]%}"
-ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL="%{$fg_bold[yellow]%}⟳ "
-ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%{$fg[yellow]%} ⤳ "
-ZSH_THEME_GIT_PROMPT_UPSTREAM_SUFFIX=""
-ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
-ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_no_bold[cyan]%}↓"
-ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_no_bold[cyan]%}↑"
-ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}✖"
-ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}●"
-ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[red]%}✚"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="…"
-ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[blue]%}⚑"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
-
-NAME_COLOR_FG="%{[38;5;031m%}"
-NAME_COLOR_BG="%{[30;48;5;250m%}"
-HOST_COLOR_FG="%{[38;5;062m%}"
-AT_COLOR_FG="%{[38;5;100m%}"
-TIME_COLOR_FG="%{[38;5;015m%}"
-TIME_COLOR_BG="%{[30;48;5;012m%}"
-SUCCES_COLOR="%{[38;5;040m%}"
-FALSE_COLOR="%{[38;5;033m%}"
-SUGGEST_COLOR="%{[38;5;001m%}"
-COLOR_END="%{[0m%}"
-KAO_1="(*'-'%)"
-KAO_2="(*;-;%)"
-KAO_3="(*'~'%)?"
-
-PROMPT=$'${NAME_COLOR_BG}${NAME_COLOR_FG} %n ${AT_COLOR_FG}at ${HOST_COLOR_FG}%m ${TIME_COLOR_BG}${TIME_COLOR_FG} %T ${COLOR_END} %(?..%F{red}%?%f · ) $(gcloud-current) %B%~%b$(gitprompt)\n%(?.${SUCCES_COLOR}.${FALSE_COLOR})%(?!${KAO_1} <!${KAO_2} <) ${COLOR_END} '
-RPROMPT=''
-SPROMPT='${SUGGEST_COLOR}${suggest}${KAO_3} < もしかして%B%r%b ${SUGGEST_COLOR}かな? [そう!(y), 違う!(n),a,e]:${COLOR_END} '
+zinit wait lucid blockf light-mode for \
+  @'zsh-users/zsh-autosuggestions' \
+  @'zsh-users/zsh-completions' \
+  @'zdharma-continuum/fast-syntax-highlighting'
 # }}}
 
 # zsh options {{{
