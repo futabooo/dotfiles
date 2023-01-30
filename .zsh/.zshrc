@@ -88,10 +88,7 @@ fi
 export ASDF_CONFIG_FILE=$HOME/dotfiles/.asdfrc
 
 ## kubectl
-### see https://github.com/zdharma/zinit/issues/174 
 source <(kubectl completion zsh)
-zinit ice as"completion"
-zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
 
 ## google-cloud-sdk from homebrew 
 source "${HOMEBREW_HOME}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
