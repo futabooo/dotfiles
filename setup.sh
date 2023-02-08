@@ -13,6 +13,8 @@ do
   fi
 done
 
+ln -s $HOME/dotfiles/sheldon/plugins.toml $HOME/.config/sheldon/plugins.toml
+
 # show invisible item of Terminal
 defaults write com.apple.finder AppleShowAllFiles -boolean true
 
