@@ -11,6 +11,11 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 github = "romkatv/zsh-defer"
 apply = ["source"]
 
+[plugins.dotfiles-defer]
+local = "~/dotfiles/zsh"
+use = ["*.zsh"]
+apply = ["source"]
+
 # deferred plugins
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
@@ -25,10 +30,6 @@ github = "zdharma-continuum/fast-syntax-highlighting"
 local = "~/dotfiles/.zsh/Completion"
 use = ["_gx"]
 apply = ["fpath"]
-
-[plugins.dotfiles-defer]
-local = "~/dotfiles/zsh"
-use = ["*.zsh"]
 
 # inline plugins
 [plugins.starship]
