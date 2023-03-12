@@ -11,7 +11,7 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 github = "romkatv/zsh-defer"
 apply = ["source"]
 
-[plugins.dotfiles-defer]
+[plugins.dotfiles-sync]
 local = "~/dotfiles/zsh"
 use = ["*.zsh"]
 apply = ["source"]
