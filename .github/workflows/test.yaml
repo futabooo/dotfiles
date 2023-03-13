@@ -11,4 +11,4 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
     - name: Run install
-      run: sh -c "$(curl -fsLS get.chezmoi.io)" --init --apply futabooo
+      run: sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
