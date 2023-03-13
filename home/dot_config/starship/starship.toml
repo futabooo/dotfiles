@@ -1,0 +1,26 @@
+[username]
+style_user = 'bg:white bold fg:cyan'
+style_root = 'black bold'
+format = '[$user ]($style)'
+disabled = false
+show_always = true
+
+[hostname]
+style = 'bg:white bold fg:purple'
+format = '[at $hostname]($style) '
+ssh_only = false
+disabled = false
+
+[time]
+disabled = false
+format = '🕙[\[ $time \]]($style) '
+time_format = '%T'
+
+[character]
+success_symbol = "[\\(*'-'*\\) ❯](bold green) "
+error_symbol = "[\\(*;-;%\\) ❯](bold blue) "
+
+[gcloud]
+format = '[$symbol$active]($style) '
+style = 'bold yellow'
+

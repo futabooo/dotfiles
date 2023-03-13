@@ -1,0 +1,13 @@
+# https://wiki.archlinux.jp/index.php/XDG_Base_Directory
+# macOSはデフォルト~/Library/Application\ Support/
+# 一部のアプリケーションは$XDG_CONFIG_HOMEを見てくれる
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+# zshの設定ファイルを読み込むpathを設定
+# ${HOME} -> ${HOME}/zsh
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+
+# zshの起動速度を計測する
+if (which zprof > /dev/null) ;then
+  zprof
+fi
