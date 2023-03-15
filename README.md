@@ -1,5 +1,8 @@
 # futabooo's dotfiles
-dotfiles, managed by [twpayne/chezmoi](https://github.com/twpayne/chezmoi):house_with_garden:. 
+
+![test](https://github.com/futabooo/dotfiles/actions/workflows/test.yaml/badge.svg)
+
+dotfiles, managed by [twpayne/chezmoi](https://github.com/twpayne/chezmoi):house_with_garden:
 
 ## install
 
