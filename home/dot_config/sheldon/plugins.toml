@@ -12,7 +12,7 @@ github = "romkatv/zsh-defer"
 apply = ["source"]
 
 [plugins.dotfiles-sync]
-local = "~/dotfiles/zsh"
+local = "~/.config/zsh"
 use = ["*.zsh"]
 apply = ["source"]
 
@@ -27,7 +27,7 @@ github = "zsh-users/zsh-autosuggestions"
 github = "zdharma-continuum/fast-syntax-highlighting"
 
 [plugins.user-completions]
-local = "~/dotfiles/.zsh/Completion"
+local = "~/.config/zsh/Completion"
 use = ["_gx"]
 apply = ["fpath"]
 
