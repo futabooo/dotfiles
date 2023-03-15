@@ -9,6 +9,7 @@ jobs:
       matrix:
         platform: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.platform }}
+    timeout-minutes: 30
     steps:
     - name: Run install
       run: sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo

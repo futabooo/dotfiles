@@ -15,19 +15,7 @@
   "postCreateCommand": "sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply futabooo",
 
   // Configure tool-specific properties.
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "terminal.integrated.profiles.linux": {
-          "zsh": {
-            "path": "zsh",
-            "args": ["-l"]
-          }
-        },
-        "terminal.integrated.defaultProfile.linux": "zsh"
-      }
-    }
-  },
+  // "customizations": {},
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   "remoteUser": "vscode"
