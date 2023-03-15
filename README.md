@@ -7,7 +7,7 @@ dotfiles, managed by [twpayne/chezmoi](https://github.com/twpayne/chezmoi):house
 ## install
 
 ```
-$ sh -c "$(curl -fsLS get.chezmoi.io)" --init --apply futabooo
+$ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
 ```
 
 ### VSCode Dev Containers
