@@ -1,7 +1,0 @@
-#compdef gx
-
-_gx() {
-  _values $(gcloud config configurations list | awk '{print $1}')
-}
-
-compdef _gx gx
