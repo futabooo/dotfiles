@@ -12,7 +12,7 @@ $ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
 
 ### VSCode Dev Containers
 
-use `postCreateCommand` in devcontainer.json
+can also use `postCreateCommand` in your devcontainer.json instead manually.
 
 ```
   "postCreateCommand": "sh -c \"$(curl -fsLS get.chezmoi.io)\" -- init --apply futabooo",
