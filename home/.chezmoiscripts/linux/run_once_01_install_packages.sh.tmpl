@@ -1,0 +1,12 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "Installing packages ..."
+curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
+
+curl -sS https://starship.rs/install.sh | sh -s -- --yes
+
+{{ end -}}
