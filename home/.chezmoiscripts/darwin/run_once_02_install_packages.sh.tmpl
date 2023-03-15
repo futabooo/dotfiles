@@ -1,0 +1,10 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if command -v brew &> /dev/null; then
+  echo "Installing packages with Homebrew ..."
+  brew bundle --file={{ .chezmoi.sourceDir }}/home/packages/Brewfile
+fi
+{{ end -}}

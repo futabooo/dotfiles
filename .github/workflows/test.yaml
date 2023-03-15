@@ -1,0 +1,14 @@
+name: Test install
+
+on: push
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - name: Run install
+      run: sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
