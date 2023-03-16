@@ -3,9 +3,6 @@
 
 set -euo pipefail
 
- {{ .chezmoi.sourceDir }}/bin/chezmoi source-path
-echo {{ .chezmoi.sourceDir }}
-
 echo "Installing packages ..."
 curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
     | sudo bash -s -- --repo rossmacarthur/sheldon --to /usr/local/bin

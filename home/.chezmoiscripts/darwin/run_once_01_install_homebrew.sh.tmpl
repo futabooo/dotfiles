@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-pwd
+echo {{ .chezmoi.sourceDir }}
 
 if ! command -v brew &> /dev/null; then
   echo "Installing Homebrew ..."

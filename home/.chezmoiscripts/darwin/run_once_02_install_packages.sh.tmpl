@@ -3,12 +3,8 @@
 
 set -euo pipefail
 
-pwd
-
 if command -v brew &> /dev/null; then
   echo "Installing packages with Homebrew ..."
-   {{ .chezmoi.sourceDir }}/bin/chezmoi source-path
-  echo {{ .chezmoi.sourceDir }}
 #  brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
 fi
 {{ end -}}
