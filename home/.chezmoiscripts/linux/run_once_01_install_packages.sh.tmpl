@@ -3,6 +3,7 @@
 
 set -euo pipefail
 
+ {{ .chezmoi.sourceDir }}/bin/chezmoi source-path
 echo {{ .chezmoi.sourceDir }}
 
 echo "Installing packages ..."

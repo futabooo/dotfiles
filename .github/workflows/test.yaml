@@ -13,5 +13,4 @@ jobs:
     steps:
     - name: Run install
       run: |
-        sh -c "$(curl -fsLS get.chezmoi.io)"
-        chezmoi init --apply futabooo
+        sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
