@@ -5,6 +5,7 @@ set -euo pipefail
 
 if command -v brew &> /dev/null; then
   echo "Installing packages with Homebrew ..."
+  echo {{ .chezmoi.sourceDir }}
   brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
 fi
 {{ end -}}
