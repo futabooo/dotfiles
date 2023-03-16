@@ -26,6 +26,9 @@ github = "zsh-users/zsh-autosuggestions"
 [plugins.zsh-syntax-highlighting]
 github = "zdharma-continuum/fast-syntax-highlighting"
 
+[plugins.asdf]
+github = 'asdf-vm/asdf'
+
 [plugins.user-completions]
 local = "~/.config/zsh/Completion"
 use = ["_gx"]
