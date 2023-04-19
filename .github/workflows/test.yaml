@@ -14,3 +14,4 @@ jobs:
     - name: Run install
       run: |
         sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
+        set -a | grep CHEZ
