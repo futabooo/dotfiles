@@ -6,7 +6,7 @@ set -euo pipefail
 if command -v brew &> /dev/null; then
   echo "Installing packages with Homebrew ..."
   {{- $computerName := output "scutil" "--get" "ComputerName" | trim -}}
-  {{- if $computerName.Contains .VarName "futabooo" -}}
+  {{- if $computerName.Contains "futabooo" -}}
   brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
   {{- else -}}
   brew install gh
