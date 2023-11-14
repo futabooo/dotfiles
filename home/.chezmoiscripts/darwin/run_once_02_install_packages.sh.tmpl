@@ -3,16 +3,16 @@
 
 set -euo pipefail
 
-scutil --get ComputerName
+computerName=$(scutil --get ComputerName)
+echo $computerName
 
 if command -v brew &> /dev/null; then
   echo "Installing packages with Homebrew ..."
-  {{- $computerName := output "scutil" "--get" "ComputerName" | trim -}}
-  {{- if eq $computerName "futabooo" -}}
-  brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
-  {{- else -}}
-  brew install gh
-  {{ end }}
+  if [[ "$computerName" == *"futabooo"* ]]; then
+    brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
+  else
+    brew install gh
+  fi
 fi
 
 {{ end -}}
