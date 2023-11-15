@@ -8,13 +8,7 @@ echo $computerName
 
 if command -v brew &> /dev/null; then
   echo "Installing packages with Homebrew ..."
-  if [[ "$CI" == "true" ]]; then
-    echo "environment = CI"
-    brew install starship
-  else
-    echo "environment != CI"
-    #brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
-  fi
+  brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
 fi
 
 {{ end -}}
