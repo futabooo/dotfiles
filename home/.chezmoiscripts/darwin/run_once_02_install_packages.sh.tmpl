@@ -3,6 +3,9 @@
 
 set -euo pipefail
 
+computerName=$(scutil --get ComputerName)
+echo $computerName
+
 if command -v brew &> /dev/null; then
   echo "Installing packages with Homebrew ..."
   brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
