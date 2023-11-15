@@ -12,7 +12,8 @@ if command -v brew &> /dev/null; then
     echo "environment = CI"
     brew install starship
   else
-    brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
+    echo "environment != CI"
+    #brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
   fi
 fi
 
