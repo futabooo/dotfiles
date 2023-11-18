@@ -1,25 +1,54 @@
+" dein.vim settings {{{
+" install dir {{{
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+" }}}
+
+" dein installation check {{{
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . s:dein_repo_dir
+endif
+" }}}
+
+" begin settings {{{
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+
+  " .toml file
+  let s:rc_dir = expand('~/.vim')
+  if !isdirectory(s:rc_dir)
+    call mkdir(s:rc_dir, 'p')
+  endif
+  let s:toml = s:rc_dir . '/dein.toml'
+
+  " read toml and cache
+  call dein#load_toml(s:toml, {'lazy': 0})
+
+  " end settings
+  call dein#end()
+  call dein#save_state()
+endif
+" }}}
+
+" plugin installation check {{{
+if dein#check_install()
+  call dein#install()
+endif
+" }}}
+
+" plugin remove check {{{
+let s:removed_plugins = dein#check_clean()
+if len(s:removed_plugins) > 0
+  call map(s:removed_plugins, "delete(v:val, 'rf')")
+  call dein#recache_runtimepath()
+endif
+" }}}
+
 " vi互換をオフにする
 set nocompatible
-
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-
-call neobundle#rc(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" add plugins
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'sudo.vim'
-" ステータスラインの表示内容強化
-NeoBundle 'itchyny/lightline.vim'
-
-filetype plugin on
-
-NeoBundleCheck
-
 
 " □や◯文字が崩れなくする
 set ambiwidth=double
@@ -36,7 +65,7 @@ set title
 " 括弧入力時の対応する括弧を表示
 set showmatch
 " コードの色分け
-colorscheme hybrid
+colorscheme nord
 syntax on
 " インデントをスペース4つ分に設定
 set tabstop=4
@@ -52,8 +81,7 @@ set wrapscan
 
 " カーソルの左右移動で行末から次の行の行頭への移動が可能になる
 set whichwrap=b,s,h,l,<,>,[,],~
-" カーソル行ハイライト
-set cursorline
+
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=indent,eol,start
 
