@@ -1,0 +1,18 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+set -euo pipefai
+
+# Brewfileのhash値をコメントに含めることでBrewfileに変更があった時にこのスクリプトを実行する
+# Brewfile: {{ include (joinPath .chezmoi.sourceDir "packages/Brewfile") | sha256sum }}
+
+if ! command -v brew &> /dev/null; then
+  echo "Installing Homebrew ..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  export PATH="$PATH:/opt/homebrew/bin/"
+fi
+
+echo "Installing packages with Homebrew ..."
+brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
+
+{{ end -}}
