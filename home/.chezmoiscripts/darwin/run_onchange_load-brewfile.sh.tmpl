@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
 
-set -euo pipefai
+set -euo pipefail
 
 # Brewfileのhash値をコメントに含めることでBrewfileに変更があった時にこのスクリプトを実行する
 # Brewfile: {{ include (joinPath .chezmoi.sourceDir "packages/Brewfile") | sha256sum }}
