@@ -33,12 +33,9 @@ export HISTSIZE=50000
 export SAVEHIST=50000
 
 ## java
-export JAVA6_HOME=$(/usr/libexec/java_home -v 1.6)
-export JAVA7_HOME=$(/usr/libexec/java_home -v 1.7)
-export JAVA8_HOME=$(/usr/libexec/java_home -v 1.8)
-export JAVA11_HOME=$(/usr/libexec/java_home -v 11)
-export JAVA15_HOME=$(/usr/libexec/java_home -v 15)
-export JAVA_HOME=${JAVA11_HOME}
+export JAVA17_HOME=$(/usr/libexec/java_home -v 17)
+export JAVA21_HOME=$(/usr/libexec/java_home -v 21)
+export JAVA_HOME=${JAVA17_HOME}
 
 ## android
 export ANDROID_HOME=$HOME/android
