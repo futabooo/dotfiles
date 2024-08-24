@@ -29,6 +29,10 @@ github = "zdharma-continuum/fast-syntax-highlighting"
 [plugins.asdf]
 github = 'asdf-vm/asdf'
 
+[plugins.brew-completions]
+local = "/opt/homebrew/share/zsh/site-functions"
+apply = ["fpath"]
+
 [plugins.user-completions]
 local = "~/.config/zsh/Completion"
 use = ["_gx"]
