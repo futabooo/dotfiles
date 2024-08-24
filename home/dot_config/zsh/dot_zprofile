@@ -9,3 +9,5 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
    eval `cat $HOME/.ssh/ssh-agent`
 fi
 ssh-add -A &> /dev/null
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
