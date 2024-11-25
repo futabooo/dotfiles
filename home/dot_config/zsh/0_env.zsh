@@ -40,6 +40,9 @@ export JAVA_HOME=${JAVA17_HOME}
 ## android
 export ANDROID_HOME=$HOME/android
 
+## dart
+export DART_PUB=$HOME/.pub-cache
+
 ## go
 export GOENV_DISABLE_GOPATH=1
 export GOPATH=$HOME/dev
@@ -51,7 +54,7 @@ export EDITOR='vi'
 export SHELL='zsh'
 
 ## path
-export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
+export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin
 
 ## homebrew
 export HOMEBREW_HOME="/opt/homebrew"
