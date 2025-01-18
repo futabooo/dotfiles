@@ -7,4 +7,5 @@ alias mv='mv -i'
 alias ij='open -b com.jetbrains.intellij'
 alias adb='adb-peco'
 alias emulator='${ANDROID_HOME}/tools/emulator'
-alias k=kubectl
+alias k='kubectl'
+alias c='chezmoi'
