@@ -34,7 +34,8 @@ export SAVEHIST=50000
 
 ## java
 export JAVA17_HOME=$(/usr/libexec/java_home -v 17)
-export JAVA21_HOME=$(/usr/libexec/java_home -v 22)
+export JAVA21_HOME=$(/usr/libexec/java_home -v 21)
+export JAVA24_HOME=$(/usr/libexec/java_home -v 24)
 export JAVA_HOME=${JAVA17_HOME}
 
 ## android
