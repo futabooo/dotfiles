@@ -1,2 +1,4 @@
 /bin/chezmoi
 /home/dot_config/gh/hosts.yml
+
+.DS_Store
