@@ -18,7 +18,7 @@ This is a personal dotfiles repository managed by [chezmoi](https://www.chezmoi.
 
 - `home/dot_*`: Files that become `.filename` in the home directory
 - `home/dot_config/`: Configuration files for `~/.config/`
-- Tool-specific configs: git, zsh, vim, starship, karabiner, etc.
+- Tool-specific configs: git, zsh, vim, starship, etc.
 - `home/dot_tool-versions`: ASDF version manager configuration
 
 ## Common Commands
