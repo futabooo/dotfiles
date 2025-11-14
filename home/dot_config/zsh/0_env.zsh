@@ -55,7 +55,7 @@ export EDITOR='vi'
 export SHELL='zsh'
 
 ## path
-export PATH=$PATH:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin
+export PATH=$PATH:$HOME/.local/bin:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin
 
 ## homebrew
 export HOMEBREW_HOME="/opt/homebrew"
