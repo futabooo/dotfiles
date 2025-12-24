@@ -66,7 +66,6 @@ export ASDF_CONFIG_FILE=${XDG_CONFIG_HOME}/asdf/asdfrc
 
 ## google-cloud-sdk
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-export CLOUDSDK_PYTHON=$HOME/.asdf/installs/python/3.8/bin/python3.8
 
 ## starship
 export STARSHIP_CONFIG=${XDG_CONFIG_HOME}/starship/starship.toml
