@@ -20,6 +20,8 @@ setopt noautoremoveslash
 setopt re_match_pcre
 ### no beep
 setopt nolistbeep
+### add timestamp zsh history file
+setopt extended_history
 ### select completion with the cursor keys
 zstyle ':completion:*:default' menu select=2
 
@@ -29,8 +31,8 @@ export TERM=xterm-256color
 
 ## history
 export HISTFILE=${ZDOTDIR}/.zsh_history
-export HISTSIZE=50000
-export SAVEHIST=50000
+export HISTSIZE=1000
+export SAVEHIST=1000
 
 ## java
 export JAVA17_HOME=$(/usr/libexec/java_home -v 17)
