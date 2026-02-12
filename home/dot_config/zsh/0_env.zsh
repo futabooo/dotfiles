@@ -57,11 +57,7 @@ export EDITOR='vi'
 export SHELL='zsh'
 
 ## path
-export PATH=$PATH:$HOME/.local/bin:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin
-
-## homebrew
-export HOMEBREW_HOME="/opt/homebrew"
-export PATH=${HOMEBREW_HOME}/bin:${HOMEBREW_HOME}/sbin:$PATH
+export PATH=${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin:$PATH
 
 ## asdf
 export ASDF_CONFIG_FILE=${XDG_CONFIG_HOME}/asdf/asdfrc
