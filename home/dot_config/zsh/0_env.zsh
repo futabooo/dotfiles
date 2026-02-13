@@ -57,7 +57,7 @@ export EDITOR='vi'
 export SHELL='zsh'
 
 ## path
-export PATH=${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin:$PATH
+export PATH=${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/.cargo/bin:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin:$PATH
 
 ## asdf
 export ASDF_CONFIG_FILE=${XDG_CONFIG_HOME}/asdf/asdfrc
