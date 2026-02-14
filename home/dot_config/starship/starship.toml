@@ -21,6 +21,6 @@ success_symbol = "[\\(*'-'*\\) ❯](bold green) "
 error_symbol = "[\\(*;-;%\\) ❯](bold blue) "
 
 [gcloud]
-format = '[$symbol$active]($style) '
-style = 'bold yellow'
-
+format = '[$symbol$active(\($project\))]($style) '
+symbol = '️🇬️ '
+style = "bold blue"
