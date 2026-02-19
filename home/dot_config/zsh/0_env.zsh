@@ -35,6 +35,19 @@ export HISTSIZE=1000
 export SAVEHIST=1000
 
 ## java
+_brew_prefix="${HOMEBREW_PREFIX:-/opt/homebrew}"
+_jvm_dir="/Library/Java/JavaVirtualMachines"
+
+for _jdk in "$_brew_prefix"/opt/openjdk*/libexec/openjdk.jdk; do
+  [ -d "$_jdk" ] || continue
+  _name=$(basename "$(dirname "$(dirname "$_jdk")")")  # openjdk@21 など
+  _link="$_jvm_dir/${_name//@/-}.jdk"                  # openjdk-21.jdk に変換
+  if [ ! -e "$_link" ]; then
+    echo "Creating symlink: $_link -> $_jdk"
+    sudo ln -sfn "$_jdk" "$_link"
+  fi
+done
+unset _brew_prefix _jvm_dir _jdk _name _link
 export JAVA17_HOME=$(/usr/libexec/java_home -v 17)
 export JAVA21_HOME=$(/usr/libexec/java_home -v 21)
 export JAVA24_HOME=$(/usr/libexec/java_home -v 24)
