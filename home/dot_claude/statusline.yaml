@@ -1,0 +1,14 @@
+options:
+  bar-style: fill
+  path-style: parent
+  theme: default
+  time-style: absolute
+  ctx-format: 'ctx {used}/{total} ({pct}%)'
+  vim-mode: auto
+  # git-symbols:
+  #   unstaged: "*"
+  #   staged: "+"
+  #   stash: "$"
+  #   untracked: "%"
+  #   ahead: "↑"
+  #   behind: "↓"
