@@ -1,4 +1,5 @@
 # linuxは普段使ってないのでCIの確認のために用意してる
+{{ if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 
 set -euo pipefail
@@ -8,3 +9,5 @@ curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
     | sudo bash -s -- --repo rossmacarthur/sheldon --to /usr/local/bin
 
 curl -sS https://starship.rs/install.sh | sh -s -- --yes
+
+{{ end -}}

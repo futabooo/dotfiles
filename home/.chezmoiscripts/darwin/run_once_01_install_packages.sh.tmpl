@@ -1,5 +1,12 @@
+{{ if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
 
 set -euo pipefail
 
-curl -fsSL https://raw.githubusercontent.com/babarot/c-c-statusline/main/bin/install.sh | bash
+if [[ ! -f "$HOME/.claude/c-c-statusline" ]]; then
+  echo "Installing c-c-statusline ..."
+  curl -fsSL https://raw.githubusercontent.com/babarot/c-c-statusline/main/bin/install.sh | bash
+else
+  echo "c-c-statusline is already installed, skipping."
+fi
+{{ end -}}

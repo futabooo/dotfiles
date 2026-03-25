@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
 
 set -euo pipefail
@@ -12,7 +13,9 @@ if ! command -v brew &> /dev/null; then
 fi
 
 echo "Installing packages with Homebrew ..."
-# GitHubのCIの時はBrewFileからのインストールを実行しない
+# GitHubのCIの時はBrewFileからのinstallをしない
 {{ if or (eq .chezmoi.username "takahiro.futagawa" ) (eq .chezmoi.username "futabooo") }}
 brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
 {{ end }}
+
+{{ end -}}
