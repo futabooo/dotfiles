@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "config": "with_skill",
+  "expectations": [
+    {"text": "sha-pinning", "passed": true, "evidence": "4/4 uses行がフルSHAでピン留め"},
+    {"text": "version-comment", "passed": true, "evidence": "全てのSHAに # vX.Y.Z コメントあり"},
+    {"text": "job-permissions", "passed": true, "evidence": "各ジョブにpermissions: contents: readあり"},
+    {"text": "timeout-minutes", "passed": true, "evidence": "test: 30分, lint: 15分"},
+    {"text": "persist-credentials-false", "passed": true, "evidence": "両方のcheckoutにpersist-credentials: false"},
+    {"text": "shell-explicit", "passed": true, "evidence": "2/2のrunステップにshell: bash"},
+    {"text": "yaml-extension", "passed": true, "evidence": "ファイル名がci.yaml"},
+    {"text": "japanese-comments", "passed": true, "evidence": "テストの実行, golangci-lintのインストールと実行"},
+    {"text": "no-ubuntu-latest", "passed": true, "evidence": "ubuntu-24.04を使用"},
+    {"text": "concurrency-set", "passed": true, "evidence": "concurrency groupあり"},
+    {"text": "no-golangci-lint-action", "passed": true, "evidence": "CLIでcurl installして実行"}
+  ]
+}

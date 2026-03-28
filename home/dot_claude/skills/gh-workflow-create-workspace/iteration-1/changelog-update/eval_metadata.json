@@ -1,0 +1,18 @@
+{
+  "eval_id": 2,
+  "eval_name": "changelog-update",
+  "prompt": "PRにchangelog-patchとかchangelog-minorとかのラベルが付いたらCHANGELOG.mdを自動更新するワークフローを作って",
+  "assertions": [
+    {"name": "sha-pinning", "description": "3rd partyアクションがフルコミットSHA(40文字)でピン留めされている"},
+    {"name": "version-comment", "description": "SHAの後に # vX.Y.Z のバージョンコメントがある"},
+    {"name": "job-permissions", "description": "各ジョブにpermissionsが明示されている"},
+    {"name": "timeout-minutes", "description": "各ジョブにtimeout-minutesが設定されている"},
+    {"name": "persist-credentials-false", "description": "actions/checkoutにpersist-credentials: falseがある"},
+    {"name": "shell-explicit", "description": "run:ステップにshell:が指定されている"},
+    {"name": "yaml-extension", "description": "ファイル拡張子が.yamlである"},
+    {"name": "japanese-comments", "description": "YAML内コメントやステップ名が日本語である"},
+    {"name": "no-ubuntu-latest", "description": "ubuntu-latestではなく具体的なバージョンが指定されている"},
+    {"name": "script-injection-safe", "description": "PRタイトル等の外部入力が${{ }}でなくenv経由で渡されている"},
+    {"name": "label-trigger", "description": "PRラベルイベントが正しくトリガーされている"}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "eval_id": 2,
+  "config": "with_skill",
+  "expectations": [
+    {"text": "sha-pinning", "passed": true, "evidence": "1/1 uses行がフルSHAでピン留め"},
+    {"text": "version-comment", "passed": true, "evidence": "# v4.1.7 コメントあり"},
+    {"text": "job-permissions", "passed": true, "evidence": "contents: write, pull-requests: read"},
+    {"text": "timeout-minutes", "passed": true, "evidence": "10分"},
+    {"text": "persist-credentials-false", "passed": true, "evidence": "persist-credentials: false"},
+    {"text": "shell-explicit", "passed": true, "evidence": "4/4のrunステップにshell: bash"},
+    {"text": "yaml-extension", "passed": true, "evidence": "ファイル名がchangelog.yaml"},
+    {"text": "japanese-comments", "passed": true, "evidence": "日本語ステップ名・コメント多数"},
+    {"text": "no-ubuntu-latest", "passed": true, "evidence": "ubuntu-24.04を使用"},
+    {"text": "script-injection-safe", "passed": true, "evidence": "PRタイトル等がenv経由"},
+    {"text": "label-trigger", "passed": true, "evidence": "pull_request closedイベント + ラベルチェック"}
+  ]
+}

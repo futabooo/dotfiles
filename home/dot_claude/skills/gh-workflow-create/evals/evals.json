@@ -1,0 +1,23 @@
+{
+  "skill_name": "gh-workflow-create",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "GoのプロジェクトにCIを追加して。テストとlintを走らせたい。lintはgolangci-lintを使って。",
+      "expected_output": "セキュアでベストプラクティスに沿ったCI用のGitHub Actionsワークフローファイル",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "mainブランチにpushしたらGoogle Cloud Runにデプロイするワークフローを作って。認証はWorkload Identity連携を使いたい。",
+      "expected_output": "OIDC認証を使ったCloud Runデプロイ用のGitHub Actionsワークフローファイル",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "PRにchangelog-patchとかchangelog-minorとかのラベルが付いたらCHANGELOG.mdを自動更新するワークフローを作って",
+      "expected_output": "ラベルイベントトリガーでCHANGELOGを更新するGitHub Actionsワークフローファイル",
+      "files": []
+    }
+  ]
+}

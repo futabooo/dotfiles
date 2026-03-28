@@ -1,0 +1,19 @@
+{
+  "eval_id": 1,
+  "eval_name": "cloud-run-deploy",
+  "prompt": "mainブランチにpushしたらGoogle Cloud Runにデプロイするワークフローを作って。認証はWorkload Identity連携を使いたい。",
+  "assertions": [
+    {"name": "sha-pinning", "description": "3rd partyアクションがフルコミットSHA(40文字)でピン留めされている"},
+    {"name": "version-comment", "description": "SHAの後に # vX.Y.Z のバージョンコメントがある"},
+    {"name": "job-permissions", "description": "各ジョブにpermissionsが明示されている"},
+    {"name": "timeout-minutes", "description": "各ジョブにtimeout-minutesが設定されている"},
+    {"name": "persist-credentials-false", "description": "actions/checkoutにpersist-credentials: falseがある"},
+    {"name": "shell-explicit", "description": "run:ステップにshell:が指定されている"},
+    {"name": "yaml-extension", "description": "ファイル拡張子が.yamlである"},
+    {"name": "japanese-comments", "description": "YAML内コメントやステップ名が日本語である"},
+    {"name": "no-ubuntu-latest", "description": "ubuntu-latestではなく具体的なバージョンが指定されている"},
+    {"name": "concurrency-set", "description": "concurrencyが設定されている"},
+    {"name": "oidc-id-token", "description": "id-token: writeパーミッションが設定されている(OIDC認証)"},
+    {"name": "script-injection-safe", "description": "${{ }}式がrun:に直接埋め込まれていない(env経由)"}
+  ]
+}

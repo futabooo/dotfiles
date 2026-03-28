@@ -1,0 +1,119 @@
+name: CHANGELOG更新
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+
+jobs:
+  update-changelog:
+    if: >-
+      github.event.pull_request.merged == true && (
+        contains(github.event.pull_request.labels.*.name, 'changelog-patch') ||
+        contains(github.event.pull_request.labels.*.name, 'changelog-minor') ||
+        contains(github.event.pull_request.labels.*.name, 'changelog-major')
+      )
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 0
+
+      - name: バージョンバンプの種類を判定
+        id: label
+        run: |
+          LABELS="$PR_LABELS"
+          if echo "$LABELS" | grep -q "changelog-major"; then
+            echo "bump=major" >> "$GITHUB_OUTPUT"
+          elif echo "$LABELS" | grep -q "changelog-minor"; then
+            echo "bump=minor" >> "$GITHUB_OUTPUT"
+          elif echo "$LABELS" | grep -q "changelog-patch"; then
+            echo "bump=patch" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
+        env:
+          PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+
+      - name: 次のバージョンを算出
+        id: version
+        run: |
+          # CHANGELOG.mdから現在のバージョンを読み取る（なければ 0.0.0）
+          CURRENT="0.0.0"
+          if [ -f CHANGELOG.md ]; then
+            FOUND=$(grep -oE '## \[[0-9]+\.[0-9]+\.[0-9]+\]' CHANGELOG.md | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' || true)
+            if [ -n "$FOUND" ]; then
+              CURRENT="$FOUND"
+            fi
+          fi
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+
+          case "$BUMP" in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+
+          echo "next=${MAJOR}.${MINOR}.${PATCH}" >> "$GITHUB_OUTPUT"
+        shell: bash
+        env:
+          BUMP: ${{ steps.label.outputs.bump }}
+
+      - name: CHANGELOG.mdを更新
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          ENTRY="## [${NEXT_VERSION}] - ${DATE}
+
+          - ${PR_TITLE} ([#${PR_NUMBER}](${PR_URL})) by @${PR_AUTHOR}"
+
+          if [ -f CHANGELOG.md ]; then
+            HEAD=$(head -1 CHANGELOG.md)
+            TAIL=$(tail -n +2 CHANGELOG.md)
+            {
+              echo "$HEAD"
+              echo ""
+              echo "$ENTRY"
+              echo "$TAIL"
+            } > CHANGELOG.md
+          else
+            {
+              echo "# Changelog"
+              echo ""
+              echo "$ENTRY"
+            } > CHANGELOG.md
+          fi
+        shell: bash
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          NEXT_VERSION: ${{ steps.version.outputs.next }}
+
+      - name: 変更をコミットしてプッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "docs: CHANGELOG.md を v${NEXT_VERSION} に更新"
+          git push
+        shell: bash
+        env:
+          NEXT_VERSION: ${{ steps.version.outputs.next }}

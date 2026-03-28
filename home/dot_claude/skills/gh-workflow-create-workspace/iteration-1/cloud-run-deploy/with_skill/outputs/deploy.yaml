@@ -1,0 +1,72 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false # デプロイは中断しない
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          persist-credentials: false
+
+      # Workload Identity連携でGoogle Cloudに認証
+      - uses: google-github-actions/auth@71f986410dfbc7added4569d411d040a91dc6935 # v2.1.8
+        id: auth
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      # gcloud CLIのセットアップ
+      - uses: google-github-actions/setup-gcloud@77e7a554d41e2ee56fc945c52dfd3f33d12def9a # v2.1.4
+
+      - name: Artifact RegistryへのDocker認証を設定
+        run: gcloud auth configure-docker "$REGION-docker.pkg.dev" --quiet
+        shell: bash
+        env:
+          REGION: ${{ vars.GCP_REGION }}
+
+      - name: Dockerイメージのビルド
+        run: docker build -t "$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE:$GITHUB_SHA" .
+        shell: bash
+        env:
+          REGION: ${{ vars.GCP_REGION }}
+          PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+          REPOSITORY: ${{ vars.GAR_REPOSITORY }}
+          SERVICE: ${{ vars.CLOUD_RUN_SERVICE }}
+
+      - name: Dockerイメージのプッシュ
+        run: docker push "$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$SERVICE:$GITHUB_SHA"
+        shell: bash
+        env:
+          REGION: ${{ vars.GCP_REGION }}
+          PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+          REPOSITORY: ${{ vars.GAR_REPOSITORY }}
+          SERVICE: ${{ vars.CLOUD_RUN_SERVICE }}
+
+      # Cloud Runへのデプロイ
+      - uses: google-github-actions/deploy-cloudrun@012c06ad1f4a2a7c0b2ff6373c6e62bdd9b1c2a5 # v2.7.5
+        id: deploy
+        with:
+          service: ${{ vars.CLOUD_RUN_SERVICE }}
+          region: ${{ vars.GCP_REGION }}
+          image: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GAR_REPOSITORY }}/${{ vars.CLOUD_RUN_SERVICE }}:${{ github.sha }}
+
+      - name: デプロイ先URLの表示
+        run: echo "デプロイ完了: $DEPLOY_URL"
+        shell: bash
+        env:
+          DEPLOY_URL: ${{ steps.deploy.outputs.url }}

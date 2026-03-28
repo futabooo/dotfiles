@@ -1,0 +1,18 @@
+{
+  "eval_id": 1,
+  "config": "without_skill",
+  "expectations": [
+    {"text": "sha-pinning", "passed": false, "evidence": "0/4 - タグ指定(v4, v2)"},
+    {"text": "version-comment", "passed": false, "evidence": "SHAピンなしのためコメントもなし"},
+    {"text": "job-permissions", "passed": true, "evidence": "contents: read, id-token: write"},
+    {"text": "timeout-minutes", "passed": false, "evidence": "timeout-minutes未設定"},
+    {"text": "persist-credentials-false", "passed": false, "evidence": "persist-credentials未設定"},
+    {"text": "shell-explicit", "passed": false, "evidence": "0/4のrunステップにshell未指定"},
+    {"text": "yaml-extension", "passed": true, "evidence": "ファイル名がdeploy.yaml"},
+    {"text": "japanese-comments", "passed": false, "evidence": "英語のみ"},
+    {"text": "no-ubuntu-latest", "passed": false, "evidence": "ubuntu-latestを使用"},
+    {"text": "concurrency-set", "passed": false, "evidence": "concurrency未設定"},
+    {"text": "oidc-id-token", "passed": true, "evidence": "id-token: writeあり"},
+    {"text": "script-injection-safe", "passed": true, "evidence": "${{ }}のrun直接埋め込みあるが、外部ユーザー入力ではない"}
+  ]
+}

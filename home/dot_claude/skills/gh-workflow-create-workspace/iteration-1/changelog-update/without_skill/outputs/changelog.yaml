@@ -1,0 +1,94 @@
+name: Update CHANGELOG
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  update-changelog:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 0
+
+      - name: Determine version bump type
+        id: label
+        run: |
+          LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+          if echo "$LABELS" | grep -q "changelog-major"; then
+            echo "bump=major" >> "$GITHUB_OUTPUT"
+          elif echo "$LABELS" | grep -q "changelog-minor"; then
+            echo "bump=minor" >> "$GITHUB_OUTPUT"
+          elif echo "$LABELS" | grep -q "changelog-patch"; then
+            echo "bump=patch" >> "$GITHUB_OUTPUT"
+          else
+            echo "bump=none" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip if no changelog label
+        if: steps.label.outputs.bump == 'none'
+        run: echo "No changelog label found. Skipping."
+
+      - name: Calculate next version
+        if: steps.label.outputs.bump != 'none'
+        id: version
+        run: |
+          # Read current version from CHANGELOG.md or default to 0.0.0
+          if [ -f CHANGELOG.md ]; then
+            CURRENT=$(grep -oP '(?<=## \[)\d+\.\d+\.\d+' CHANGELOG.md | head -1 || echo "0.0.0")
+          fi
+          CURRENT="${CURRENT:-0.0.0}"
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+          BUMP="${{ steps.label.outputs.bump }}"
+
+          if [ "$BUMP" = "major" ]; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif [ "$BUMP" = "minor" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          elif [ "$BUMP" = "patch" ]; then
+            PATCH=$((PATCH + 1))
+          fi
+
+          echo "next=${MAJOR}.${MINOR}.${PATCH}" >> "$GITHUB_OUTPUT"
+
+      - name: Update CHANGELOG.md
+        if: steps.label.outputs.bump != 'none'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          NEXT_VERSION: ${{ steps.version.outputs.next }}
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          ENTRY="## [${NEXT_VERSION}] - ${DATE}\n\n- ${PR_TITLE} ([#${PR_NUMBER}](${PR_URL})) by @${PR_AUTHOR}\n"
+
+          if [ -f CHANGELOG.md ]; then
+            # Insert the new entry after the first line (title line)
+            # Assumes CHANGELOG.md starts with "# Changelog"
+            HEAD=$(head -1 CHANGELOG.md)
+            TAIL=$(tail -n +2 CHANGELOG.md)
+            printf "%s\n\n%b\n%s\n" "$HEAD" "$ENTRY" "$TAIL" > CHANGELOG.md
+          else
+            printf "# Changelog\n\n%b\n" "$ENTRY" > CHANGELOG.md
+          fi
+
+      - name: Commit and push changes
+        if: steps.label.outputs.bump != 'none'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "docs: update CHANGELOG.md for v${{ steps.version.outputs.next }}"
+          git push

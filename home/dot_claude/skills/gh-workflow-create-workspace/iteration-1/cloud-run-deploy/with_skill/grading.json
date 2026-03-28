@@ -1,0 +1,18 @@
+{
+  "eval_id": 1,
+  "config": "with_skill",
+  "expectations": [
+    {"text": "sha-pinning", "passed": true, "evidence": "4/4 uses行がフルSHAでピン留め"},
+    {"text": "version-comment", "passed": true, "evidence": "全てのSHAに # vX.Y.Z コメントあり"},
+    {"text": "job-permissions", "passed": true, "evidence": "contents: read, id-token: write"},
+    {"text": "timeout-minutes", "passed": true, "evidence": "30分"},
+    {"text": "persist-credentials-false", "passed": true, "evidence": "checkoutにpersist-credentials: false"},
+    {"text": "shell-explicit", "passed": true, "evidence": "4/4のrunステップにshell: bash"},
+    {"text": "yaml-extension", "passed": true, "evidence": "ファイル名がdeploy.yaml"},
+    {"text": "japanese-comments", "passed": true, "evidence": "日本語コメント・ステップ名多数"},
+    {"text": "no-ubuntu-latest", "passed": true, "evidence": "ubuntu-24.04を使用"},
+    {"text": "concurrency-set", "passed": true, "evidence": "concurrency groupあり、cancel-in-progress: false"},
+    {"text": "oidc-id-token", "passed": true, "evidence": "id-token: writeあり"},
+    {"text": "script-injection-safe", "passed": true, "evidence": "全ての外部入力がenv経由"}
+  ]
+}

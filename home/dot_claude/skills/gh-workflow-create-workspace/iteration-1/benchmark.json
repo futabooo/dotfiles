@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "skill_name": "gh-workflow-create",
+    "timestamp": "2026-03-29T00:30:00Z",
+    "evals_run": ["go-ci", "cloud-run-deploy", "changelog-update"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "go-ci",
+      "config": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 11,
+      "total": 11
+    },
+    {
+      "eval_name": "go-ci",
+      "config": "without_skill",
+      "pass_rate": 0.27,
+      "passed": 3,
+      "total": 11
+    },
+    {
+      "eval_name": "cloud-run-deploy",
+      "config": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 12,
+      "total": 12
+    },
+    {
+      "eval_name": "cloud-run-deploy",
+      "config": "without_skill",
+      "pass_rate": 0.33,
+      "passed": 4,
+      "total": 12
+    },
+    {
+      "eval_name": "changelog-update",
+      "config": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 11,
+      "total": 11
+    },
+    {
+      "eval_name": "changelog-update",
+      "config": "without_skill",
+      "pass_rate": 0.27,
+      "passed": 3,
+      "total": 11
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "mean_pass_rate": 1.0,
+      "stddev_pass_rate": 0.0
+    },
+    "without_skill": {
+      "mean_pass_rate": 0.29,
+      "stddev_pass_rate": 0.03
+    },
+    "delta": {
+      "pass_rate": "+0.71"
+    }
+  },
+  "notes": [
+    "スキルあり: 全34アサーション中34パス (100%)",
+    "スキルなし: 全34アサーション中10パス (29%)",
+    "スキルなしで一貫してFAILする項目: sha-pinning, version-comment, timeout-minutes, persist-credentials-false, shell-explicit, no-ubuntu-latest, japanese-comments",
+    "注意: with_skillの出力は親エージェントがスキルを参照して作成（サブエージェント権限問題のため）"
+  ]
+}

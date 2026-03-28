@@ -1,0 +1,17 @@
+{
+  "eval_id": 0,
+  "config": "without_skill",
+  "expectations": [
+    {"text": "sha-pinning", "passed": false, "evidence": "0/5 - タグ指定(v4, v5, v6)"},
+    {"text": "version-comment", "passed": false, "evidence": "SHAピンなしのためコメントもなし"},
+    {"text": "job-permissions", "passed": true, "evidence": "ワークフローレベルにpermissions: contents: read"},
+    {"text": "timeout-minutes", "passed": false, "evidence": "timeout-minutes未設定"},
+    {"text": "persist-credentials-false", "passed": false, "evidence": "persist-credentials未設定"},
+    {"text": "shell-explicit", "passed": false, "evidence": "0/1のrunステップにshell未指定"},
+    {"text": "yaml-extension", "passed": true, "evidence": "ファイル名がci.yaml"},
+    {"text": "japanese-comments", "passed": false, "evidence": "英語のみ"},
+    {"text": "no-ubuntu-latest", "passed": false, "evidence": "ubuntu-latestを使用"},
+    {"text": "concurrency-set", "passed": false, "evidence": "concurrency未設定"},
+    {"text": "no-golangci-lint-action", "passed": false, "evidence": "golangci/golangci-lint-action@v6を使用"}
+  ]
+}
