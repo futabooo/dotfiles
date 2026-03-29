@@ -5,7 +5,9 @@ set -euo pipefail
 
 if [[ ! -f "$HOME/.claude/c-c-statusline" ]]; then
   echo "Installing c-c-statusline ..."
-  curl -fsSL https://raw.githubusercontent.com/babarot/c-c-statusline/main/bin/install.sh | bash
+  if ! curl -fsSL https://raw.githubusercontent.com/babarot/c-c-statusline/main/bin/install.sh | bash; then
+    echo "Warning: Failed to install c-c-statusline, skipping."
+  fi
 else
   echo "c-c-statusline is already installed, skipping."
 fi
