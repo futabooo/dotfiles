@@ -1,0 +1,3 @@
+# Raycast
+
+- script-commandはchezmoiで管理してるこのリポジトリがセットアップされた時に存在するPATHをRaycast側で指定してるので特にコピーとかしてない
