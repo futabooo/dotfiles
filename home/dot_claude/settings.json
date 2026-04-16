@@ -1,0 +1,31 @@
+{
+  "enabledPlugins": {
+    "firebase@firebase": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "chrome-devtools-plugins": {
+      "source": {
+        "repo": "ChromeDevTools/chrome-devtools-mcp",
+        "source": "github"
+      }
+    },
+    "firebase": {
+      "source": {
+        "repo": "firebase/firebase-tools",
+        "source": "github"
+      }
+    }
+  },
+  "model": "opus",
+  "permissions": {
+    "allow": [
+      "mcp__pencil"
+    ]
+  },
+  "plansDirectory": "~/.claude/plans",
+  "statusLine": {
+    "command": "~/.claude/c-c-statusline",
+    "type": "command"
+  }
+}
