@@ -4,13 +4,14 @@
       "mcp__pencil"
     ]
   },
-  "model": "opus",
+  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/c-c-statusline"
   },
   "enabledPlugins": {
     "firebase@firebase": true,
+    "figma@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
@@ -27,5 +28,5 @@
       }
     }
   },
-  "plansDirectory": "~/.claude/plans"
+  "plansDirectory": "./plans"
 }
