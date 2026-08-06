@@ -45,5 +45,19 @@
       }
     }
   },
-  "plansDirectory": "./plans"
+  "plansDirectory": "./plans",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
 }
