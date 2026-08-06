@@ -1,0 +1,7 @@
+[ui.toast]
+delivery = "system"
+delay_seconds = 1
+
+[theme]
+name = "tokyo-night"
+auto_switch = false
