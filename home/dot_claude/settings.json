@@ -1,31 +1,63 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__pencil",
+      "Bash(gh pr view *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr status *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh issue view *)",
+      "Bash(gh issue list *)",
+      "Bash(gh issue status *)",
+      "Bash(gh repo view *)",
+      "Bash(gh run view *)",
+      "Bash(gh run list *)",
+      "Bash(gh release view *)",
+      "Bash(gh release list *)",
+      "Bash(gh workflow view *)",
+      "Bash(gh workflow list *)",
+      "Bash(gh auth status *)",
+      "Bash(gh status *)"
+    ]
+  },
+  "model": "opusplan",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/c-c-statusline"
+  },
   "enabledPlugins": {
     "firebase@firebase": true,
+    "figma@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "chrome-devtools-plugins": {
       "source": {
-        "repo": "ChromeDevTools/chrome-devtools-mcp",
-        "source": "github"
+        "source": "github",
+        "repo": "ChromeDevTools/chrome-devtools-mcp"
       }
     },
     "firebase": {
       "source": {
-        "repo": "firebase/firebase-tools",
-        "source": "github"
+        "source": "github",
+        "repo": "firebase/firebase-tools"
       }
     }
   },
-  "model": "opus",
-  "permissions": {
-    "allow": [
-      "mcp__pencil"
+  "plansDirectory": "./plans",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
+            "timeout": 20
+          }
+        ]
+      }
     ]
-  },
-  "plansDirectory": "~/.claude/plans",
-  "statusLine": {
-    "command": "~/.claude/c-c-statusline",
-    "type": "command"
   }
 }

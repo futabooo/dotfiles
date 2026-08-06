@@ -21,6 +21,16 @@ This is a personal dotfiles repository managed by [chezmoi](https://www.chezmoi.
 - Tool-specific configs: git, zsh, vim, starship, etc.
 - `home/dot_tool-versions`: ASDF version manager configuration
 
+## Security Constraints
+
+This repository is **public**. Everything under `home/` is world-readable.
+
+`home/dot_claude/settings.json` deploys to `~/.claude/settings.json`, which controls Claude Code's auto-approval behavior. Publishing it hands anyone a map of what runs on this machine without a prompt.
+
+- **`permissions.allow` must contain read-only commands only** (e.g. `gh pr view`, `gh issue list`). Never add write or execute patterns — `git push`, `gh pr create`, `npm run`, `rm`, `chezmoi apply`, etc. A published write-capable allowlist is directly exploitable via prompt injection.
+- If a write/execute rule is genuinely needed, keep it out of the repo: rename to `settings.json.tmpl` and source the list from `[data.claude]` in `~/.config/chezmoi/chezmoi.toml` (not version-controlled). Guard it with `{{ if hasKey . "claude" }}` — a missing key is a hard template error, and `default` does not rescue it.
+- Never commit `env`, `apiKeyHelper`, or MCP server configs containing tokens. Same for `~/.claude.json`, which holds OAuth tokens and per-project history.
+
 ## Common Commands
 
 ### Chezmoi Management
