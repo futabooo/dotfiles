@@ -7,7 +7,6 @@
 
 # Optional parameters:
 # @raycast.icon 💻
-# @raycast.packageName System
 
 # Documentation:
 # @raycast.description フタを閉じてもスリープしない設定をトグルする。ONにしたらそのままロック画面へ切り替える。
