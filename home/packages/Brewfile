@@ -1,3 +1,4 @@
+tap "beeftornado/rmtree"
 tap "bufbuild/buf"
 tap "heroku/brew"
 tap "k1LoW/tap"
