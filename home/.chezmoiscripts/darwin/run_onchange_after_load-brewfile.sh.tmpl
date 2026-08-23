@@ -15,7 +15,7 @@ fi
 echo "Installing packages with Homebrew ..."
 # GitHubのCIの時はBrewFileからのinstallをしない
 {{ if or (eq .chezmoi.username "takahiro.futagawa" ) (eq .chezmoi.username "futabooo") }}
-brew bundle --file={{ .chezmoi.sourceDir }}/packages/Brewfile
+brew bundle --file={{ .chezmoi.homeDir }}/packages/Brewfile
 {{ end }}
 
 {{ end -}}

@@ -18,6 +18,7 @@ This is a personal dotfiles repository managed by [chezmoi](https://www.chezmoi.
 
 - `home/dot_*`: Files that become `.filename` in the home directory
 - `home/dot_config/`: Configuration files for `~/.config/`
+- `home/packages/raycast/script-command/`: Raycast Script Commands, deployed to `~/packages/raycast/script-command/` and registered there as a Raycast script directory. New scripts **must** use the `executable_` prefix — without it chezmoi deploys them 0644 and Raycast cannot run them.
 - Tool-specific configs: git, zsh, vim, starship, etc.
 - `home/dot_tool-versions`: ASDF version manager configuration
 
