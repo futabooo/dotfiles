@@ -19,4 +19,4 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           path: |
-            home/packages/raycast/script
+            home/packages/raycast/script-command

@@ -1,14 +1,18 @@
 # Raycast
 
-- script-commandはchezmoiで管理してるこのリポジトリがセットアップされた時に存在するPATHをRaycast側で指定してるので特にコピーとかしてない
-
 ## script-command
 
-### obsidian_add_times.sh
+`chezmoi apply` で `~/packages/raycast/script-command/` に配置される。Raycast の Extensions → Script Commands → Add Script Directory でこのパスを指定する。
+
+ソースディレクトリを直接指定しないこと。ソース側はファイル名が chezmoi の属性プレフィックス付き（`executable_`）になっていて、将来テンプレート（`.tmpl`）を使うとファイル名も中身も配置後のものと一致しなくなる。
+
+**新しいスクリプトを追加するときは必ず `executable_` プレフィックスを付ける。** これが無いと配置先で実行ビットが落ちて Raycast から実行できない。
+
+### executable_obsidian_add_times.sh
 
 分報をObsidianのデイリーノートに追記する。
 
-### lid-mode.sh
+### executable_lid-mode.sh
 
 フタを閉じても作業が止まらないモードのトグル。ONにすると `pmset -a disablesleep 1` でスリープを無効化し、そのままロック画面に切り替える。もう一度叩くと `disablesleep 0` に戻す。
 
