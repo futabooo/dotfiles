@@ -11,6 +11,12 @@ jobs:
     runs-on: ${{ matrix.platform }}
     timeout-minutes: 10
     steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+    - name: Install chezmoi
+      run: |
+        sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+
     - name: Run install
       run: |
-        sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
+        "$HOME/.local/bin/chezmoi" init --apply --source "$GITHUB_WORKSPACE"
