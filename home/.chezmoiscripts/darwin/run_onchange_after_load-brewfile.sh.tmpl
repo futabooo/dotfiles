@@ -15,7 +15,17 @@ fi
 echo "Installing packages with Homebrew ..."
 # GitHubのCIの時はBrewFileからのinstallをしない
 {{ if or (eq .chezmoi.username "takahiro.futagawa" ) (eq .chezmoi.username "futabooo") }}
-brew bundle --file={{ .chezmoi.homeDir }}/packages/Brewfile
+brewfile="{{ .chezmoi.homeDir }}/packages/Brewfile"
+
+# 新しいHomebrewは非公式tapをtrustしないとformulaやコマンドを読み込まない
+# Brewfileに書いてあるtapは自分で管理しているものなのでまとめてtrustする
+if brew trust --help > /dev/null 2>&1; then
+  while IFS= read -r tap; do
+    brew trust --tap "$tap"
+  done < <(sed -n 's/^tap "\([^"]*\)".*/\1/p' "$brewfile")
+fi
+
+brew bundle --file="$brewfile"
 {{ end }}
 
 {{ end -}}
