@@ -47,11 +47,14 @@ for _jdk in "$_brew_prefix"/opt/openjdk*/libexec/openjdk.jdk; do
     sudo ln -sfn "$_jdk" "$_link"
   fi
 done
-unset _brew_prefix _jvm_dir _jdk _name _link
-export JAVA17_HOME=$(/usr/libexec/java_home -v 17)
-export JAVA21_HOME=$(/usr/libexec/java_home -v 21)
-export JAVA24_HOME=$(/usr/libexec/java_home -v 24)
+# /opt/homebrew/opt/<formula> はHomebrew管理のsymlinkで常に現行バージョンを指す
+# (/usr/libexec/java_home はCellarのバージョン番号入り実体パスを返すため、
+#  brew upgrade後に起動済みプロセスが消えたパスを抱え続ける)
+export JAVA17_HOME="$_brew_prefix/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+export JAVA21_HOME="$_brew_prefix/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
+export JAVA24_HOME="$_brew_prefix/opt/openjdk@24/libexec/openjdk.jdk/Contents/Home"
 export JAVA_HOME=${JAVA17_HOME}
+unset _brew_prefix _jvm_dir _jdk _name _link
 
 ## android
 export ANDROID_HOME=$HOME/android

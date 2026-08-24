@@ -1,1 +1,4 @@
 eval "$(sheldon source)"
+
+# mise (.mise.toml のあるリポジトリでツールバージョンを解決。asdfより優先される)
+eval "$(mise activate zsh)"

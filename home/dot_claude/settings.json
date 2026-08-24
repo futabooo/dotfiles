@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "mcp__pencil",
       "Bash(gh pr view *)",
       "Bash(gh pr list *)",
       "Bash(gh pr status *)",
@@ -18,10 +17,25 @@
       "Bash(gh workflow view *)",
       "Bash(gh workflow list *)",
       "Bash(gh auth status *)",
-      "Bash(gh status *)"
+      "Bash(gh status *)",
+      "mcp__pencil"
     ]
   },
-  "model": "opusplan",
+  "model": "fable",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/c-c-statusline"
@@ -29,7 +43,9 @@
   "enabledPlugins": {
     "firebase@firebase": true,
     "figma@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "chrome-devtools-plugins": {
@@ -46,18 +62,5 @@
     }
   },
   "plansDirectory": "./plans",
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "ExitPlanMode",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
-            "timeout": 20
-          }
-        ]
-      }
-    ]
-  }
+  "agentPushNotifEnabled": true
 }
