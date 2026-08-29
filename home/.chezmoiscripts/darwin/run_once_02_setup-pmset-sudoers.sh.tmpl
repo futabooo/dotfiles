@@ -1,0 +1,26 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# GitHubのCIの時はsudoers設定をしない
+{{ if or (eq .chezmoi.username "takahiro.futagawa") (eq .chezmoi.username "futabooo") }}
+# Raycastの「フタ閉じ作業モード」(packages/raycast/script-command/lid-mode.sh) が
+# パスワードなしで pmset -a disablesleep を実行できるようにする
+sudoers_file="/etc/sudoers.d/pmset"
+entry='{{ .chezmoi.username }} ALL=(ALL) NOPASSWD: /usr/bin/pmset -a disablesleep 0, /usr/bin/pmset -a disablesleep 1'
+
+if sudo -n -l /usr/bin/pmset -a disablesleep 0 > /dev/null 2>&1; then
+  echo "pmset sudoers is already configured, skipping."
+else
+  echo "Setting up $sudoers_file (sudo password required) ..."
+  tmpfile="$(mktemp)"
+  echo "$entry" > "$tmpfile"
+  # 構文エラーのあるsudoersファイルはsudo全体を壊すので設置前に検証する
+  visudo -cf "$tmpfile"
+  sudo install -m 440 -o root -g wheel "$tmpfile" "$sudoers_file"
+  rm -f "$tmpfile"
+  echo "Done."
+fi
+{{ end }}
+{{ end -}}
