@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# herdr のワークスペースをサイドバー番号 (1 始まり) で focus する。
+# terminal-notifier の -execute から呼ばれる想定 (PATH が最小なので自前で補う)。
+set -euo pipefail
+
+number="${1:?usage: herdr-focus-workspace <number>}"
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
+workspace_id=$(herdr workspace list \
+  | jq -r --argjson n "$number" '.result.workspaces[] | select(.number == $n) | .workspace_id')
+
+if [ -z "$workspace_id" ]; then
+  echo "herdr-focus-workspace: workspace #$number not found" >&2
+  exit 1
+fi
+
+exec herdr workspace focus "$workspace_id"
