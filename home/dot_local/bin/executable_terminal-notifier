@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# terminal-notifier のラッパー。
+# herdr の system 通知 (本文が "<workspace label> · <番号>[ · <tab>]" 形式) に
+# -execute を足して、通知クリック時に対象ワークスペースへ移動できるようにする。
+# それ以外の呼び出しはそのまま本物の terminal-notifier に渡す。
+set -u
+
+real=/opt/homebrew/bin/terminal-notifier
+if [ ! -x "$real" ]; then
+  real=$(PATH=/usr/local/bin:/opt/homebrew/bin command -v terminal-notifier || true)
+fi
+if [ -z "${real:-}" ]; then
+  echo "terminal-notifier: real binary not found (brew install terminal-notifier)" >&2
+  exit 127
+fi
+
+message=""
+has_execute=0
+args=("$@")
+for ((i = 0; i < ${#args[@]}; i++)); do
+  case "${args[i]}" in
+    -message) message="${args[i + 1]:-}" ;;
+    -execute) has_execute=1 ;;
+  esac
+done
+
+if [ "$has_execute" -eq 0 ] && [[ "$message" =~ ^(.*)\ ·\ ([0-9]+)(\ ·\ .*)?$ ]]; then
+  number="${BASH_REMATCH[2]}"
+  exec "$real" "$@" -execute "$HOME/.local/bin/herdr-focus-workspace $number"
+fi
+
+exec "$real" "$@"
