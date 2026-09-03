@@ -78,7 +78,7 @@ The dotfiles configure development environments for:
 - **Shell**: Zsh with starship prompt, sheldon plugin manager
 - **Editors**: Vim, VSCode (with extensive extension list)
 - **Mobile development**: Android Studio, Flutter/Dart tooling
-- **Container tools**: Docker, Kubernetes CLI
+- **Container tools**: Docker
 - **Terminal**: iTerm2, ghostty configs
 
 ## Testing
