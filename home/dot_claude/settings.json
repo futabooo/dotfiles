@@ -21,7 +21,7 @@
       "mcp__pencil"
     ]
   },
-  "model": "fable",
+  "model": "fable[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -31,6 +31,18 @@
             "type": "command",
             "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
             "timeout": 20
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
           }
         ]
       }
@@ -59,6 +71,14 @@
         "source": "github",
         "repo": "firebase/firebase-tools"
       }
+    }
+  },
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "medium"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
     }
   },
   "plansDirectory": "./plans",
