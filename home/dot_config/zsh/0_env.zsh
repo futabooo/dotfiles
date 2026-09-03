@@ -73,10 +73,8 @@ export EDITOR='vi'
 export SHELL='zsh'
 
 ## path
-export PATH=${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$HOME/.local/bin:$HOME/.cargo/bin:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin:$PATH
-
-## asdf
-export ASDF_CONFIG_FILE=${XDG_CONFIG_HOME}/asdf/asdfrc
+# mise shims は非対話シェル(Raycast等、mise activate が効かない場面)向け。対話シェルでは activate が優先される
+export PATH=$HOME/.local/share/mise/shims:$HOME/.local/bin:$HOME/.cargo/bin:${GOPATH}/bin:${ANDROID_HOME}/cmdline-tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator:${DART_PUB}/bin:$PATH
 
 ## google-cloud-sdk
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
