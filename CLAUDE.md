@@ -20,7 +20,7 @@ This is a personal dotfiles repository managed by [chezmoi](https://www.chezmoi.
 - `home/dot_config/`: Configuration files for `~/.config/`
 - `home/packages/raycast/script-command/`: Raycast Script Commands, deployed to `~/packages/raycast/script-command/` and registered there as a Raycast script directory. New scripts **must** use the `executable_` prefix — without it chezmoi deploys them 0644 and Raycast cannot run them.
 - Tool-specific configs: git, zsh, vim, starship, etc.
-- `home/dot_tool-versions`: ASDF version manager configuration
+- `home/dot_config/mise/config.toml`: mise global tool versions (dart, ruby, python) and settings
 
 ## Security Constraints
 
@@ -74,7 +74,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
 
 The dotfiles configure development environments for:
 - **Languages**: Dart (3.6.0), Ruby (3.2.2), Python (3.10, 2.7.18)
-- **Version management**: ASDF with .tool-versions
+- **Version management**: mise (`~/.config/mise/config.toml` for global, `.mise.toml` / `.tool-versions` per repo)
 - **Shell**: Zsh with starship prompt, sheldon plugin manager
 - **Editors**: Vim, VSCode (with extensive extension list)
 - **Mobile development**: Android Studio, Flutter/Dart tooling

@@ -1,4 +1,4 @@
 eval "$(sheldon source)"
 
-# mise (.mise.toml のあるリポジトリでツールバージョンを解決。asdfより優先される)
+# mise (グローバルは ~/.config/mise/config.toml、リポジトリごとは .mise.toml / .tool-versions でツールバージョンを解決)
 eval "$(mise activate zsh)"

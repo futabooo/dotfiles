@@ -1,0 +1,8 @@
+[tools]
+dart = "3.6.0"
+ruby = "3.2.2"
+python = ["3.10", "2.7.18"]
+
+[settings]
+# asdf の legacy_version_file = yes 相当。.ruby-version / .node-version / .python-version 等を読む
+idiomatic_version_file_enable_tools = ["ruby", "node", "python", "dart", "java", "flutter"]
