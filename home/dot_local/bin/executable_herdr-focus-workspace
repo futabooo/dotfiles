@@ -4,7 +4,8 @@
 #
 # `herdr workspace focus` は herdr TUI 内のワークスペースを切り替えるだけなので、
 # herdr が動いている Ghostty のタブも前面に出す (System Events 経由。
-# terminal-notifier にアクセシビリティ権限が必要)。
+# terminal-notifier にアクセシビリティ権限が必要。Ghostty 自体への
+# Automation 権限は不要)。
 set -euo pipefail
 
 number="${1:?usage: herdr-focus-workspace <number>}"
@@ -23,34 +24,51 @@ herdr workspace focus "$workspace_id" >/dev/null
 # herdr は外側のターミナルに "{hostname}: {workspace}" というタイトルを書くので、
 # そのタイトルで始まる Ghostty のタブを探して選択し、ウィンドウを前面に出す。
 title_prefix="$(hostname): "
-osascript - "$title_prefix" <<'APPLESCRIPT' || true
+
+if ! osascript_err=$(osascript - "$title_prefix" 2>&1 >/dev/null <<'APPLESCRIPT'
 on run argv
   set titlePrefix to item 1 of argv
-  set prefixLen to length of titlePrefix
   tell application "System Events"
-    if not (exists process "Ghostty") then return
+    if not (exists process "Ghostty") then error "Ghostty is not running"
     tell process "Ghostty"
       repeat with w in windows
-        try
+        if exists tab group 1 of w then
           repeat with r in (radio buttons of tab group 1 of w)
             set t to name of r
-            if (length of t) ≥ prefixLen and text 1 thru prefixLen of t is titlePrefix then
+            if t starts with titlePrefix then
               if not (value of r as boolean) then click r
-              perform action "AXRaise" of w
-              tell application "Ghostty" to activate
+              my raiseWindow(w)
               return
             end if
           end repeat
-        on error
+        else
           -- タブが 1 つだけのウィンドウには tab group がない
-          if (length of (name of w)) ≥ prefixLen and text 1 thru prefixLen of (name of w) is titlePrefix then
-            perform action "AXRaise" of w
-            tell application "Ghostty" to activate
+          if (name of w) starts with titlePrefix then
+            my raiseWindow(w)
             return
           end if
-        end try
+        end if
       end repeat
     end tell
   end tell
+  error "no Ghostty tab with title prefix " & titlePrefix
 end run
+
+on raiseWindow(w)
+  tell application "System Events"
+    tell process "Ghostty"
+      perform action "AXRaise" of w
+      set frontmost to true
+    end tell
+  end tell
+end raiseWindow
 APPLESCRIPT
+); then
+  log_dir="$HOME/.local/state"
+  mkdir -p "$log_dir"
+  printf '%s %s\n' "$(date '+%Y-%m-%dT%H:%M:%S%z')" "$osascript_err" >> "$log_dir/herdr-focus-workspace.log"
+  if [ -x /opt/homebrew/bin/terminal-notifier ]; then
+    /opt/homebrew/bin/terminal-notifier -title "herdr-focus-workspace" -message "Ghostty のタブを前面に出せませんでした (アクセシビリティ権限を確認)"
+  fi
+  exit 1
+fi
