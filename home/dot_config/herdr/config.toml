@@ -1,3 +1,4 @@
+onboarding = false
 [ui.toast]
 delivery = "system"
 delay_seconds = 1
