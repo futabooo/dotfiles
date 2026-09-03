@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # herdr のワークスペースをサイドバー番号 (1 始まり) で focus する。
 # terminal-notifier の -execute から呼ばれる想定 (PATH が最小なので自前で補う)。
+#
+# `herdr workspace focus` は herdr TUI 内のワークスペースを切り替えるだけなので、
+# herdr が動いている Ghostty のタブも前面に出す (System Events 経由。
+# terminal-notifier にアクセシビリティ権限が必要)。
 set -euo pipefail
 
 number="${1:?usage: herdr-focus-workspace <number>}"
@@ -14,4 +18,39 @@ if [ -z "$workspace_id" ]; then
   exit 1
 fi
 
-exec herdr workspace focus "$workspace_id"
+herdr workspace focus "$workspace_id" >/dev/null
+
+# herdr は外側のターミナルに "{hostname}: {workspace}" というタイトルを書くので、
+# そのタイトルで始まる Ghostty のタブを探して選択し、ウィンドウを前面に出す。
+title_prefix="$(hostname): "
+osascript - "$title_prefix" <<'APPLESCRIPT' || true
+on run argv
+  set titlePrefix to item 1 of argv
+  set prefixLen to length of titlePrefix
+  tell application "System Events"
+    if not (exists process "Ghostty") then return
+    tell process "Ghostty"
+      repeat with w in windows
+        try
+          repeat with r in (radio buttons of tab group 1 of w)
+            set t to name of r
+            if (length of t) ≥ prefixLen and text 1 thru prefixLen of t is titlePrefix then
+              if not (value of r as boolean) then click r
+              perform action "AXRaise" of w
+              tell application "Ghostty" to activate
+              return
+            end if
+          end repeat
+        on error
+          -- タブが 1 つだけのウィンドウには tab group がない
+          if (length of (name of w)) ≥ prefixLen and text 1 thru prefixLen of (name of w) is titlePrefix then
+            perform action "AXRaise" of w
+            tell application "Ghostty" to activate
+            return
+          end if
+        end try
+      end repeat
+    end tell
+  end tell
+end run
+APPLESCRIPT
