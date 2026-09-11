@@ -19,6 +19,19 @@
       "Bash(gh auth status *)",
       "Bash(gh status *)",
       "mcp__pencil"
+    ],
+    "ask": [
+      "Bash(gh api *)",
+      "Bash(gh repo edit *)",
+      "Bash(gh ruleset *)",
+      "Bash(gh secret *)",
+      "Bash(gh variable *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(wrangler *)",
+      "Bash(bunx wrangler *)",
+      "Bash(npx wrangler *)",
+      "Bash(bun run deploy*)"
     ]
   },
   "model": "fable[1m]",
