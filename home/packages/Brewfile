@@ -58,6 +58,7 @@ brew "heroku/brew/heroku"
 brew "k1low/tap/mo", trusted: true
 brew "mobile-dev-inc/tap/maestro", trusted: true
 cask "1password"
+cask "1password-cli"
 cask "android-studio"
 cask "android-studio-preview@canary"
 cask "androidtool"

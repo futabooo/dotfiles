@@ -19,6 +19,7 @@ This is a personal dotfiles repository managed by [chezmoi](https://www.chezmoi.
 - `home/dot_*`: Files that become `.filename` in the home directory
 - `home/dot_config/`: Configuration files for `~/.config/`
 - `home/packages/raycast/script-command/`: Raycast Script Commands, deployed to `~/packages/raycast/script-command/` and registered there as a Raycast script directory. New scripts **must** use the `executable_` prefix — without it chezmoi deploys them 0644 and Raycast cannot run them.
+- `home/dot_local/bin/`: Personal scripts, deployed to `~/.local/bin/` (second entry on `PATH`, ahead of `/opt/homebrew/bin`, so a script here shadows a Homebrew binary of the same name). New scripts **must** use the `executable_` prefix — without it chezmoi deploys them 0644 and they cannot be run. Files here have no extension (`gh-ro`, not `gh-ro.sh`).
 - Tool-specific configs: git, zsh, vim, starship, etc.
 - `home/dot_config/mise/config.toml`: mise global tool versions (dart, ruby, python) and settings
 
@@ -31,6 +32,8 @@ This repository is **public**. Everything under `home/` is world-readable.
 - **`permissions.allow` must contain read-only commands only** (e.g. `gh pr view`, `gh issue list`). Never add write or execute patterns — `git push`, `gh pr create`, `npm run`, `rm`, `chezmoi apply`, etc. A published write-capable allowlist is directly exploitable via prompt injection.
 - If a write/execute rule is genuinely needed, keep it out of the repo: rename to `settings.json.tmpl` and source the list from `[data.claude]` in `~/.config/chezmoi/chezmoi.toml` (not version-controlled). Guard it with `{{ if hasKey . "claude" }}` — a missing key is a hard template error, and `default` does not rescue it.
 - Never commit `env`, `apiKeyHelper`, or MCP server configs containing tokens. Same for `~/.claude.json`, which holds OAuth tokens and per-project history.
+- The readonly wrappers in `home/dot_local/bin/` (`gh-ro`, and later `wrangler-ro` / `firebase-ro`) are the only way a service CLI belongs in `permissions.allow` — as `Bash(gh-ro:*)`, never as `Bash(gh *)`. They inject a read-only credential pulled from 1Password at run time, so no secret is committed. Their effective boundary is the credential's scope, not the in-script allowlist; treat the allowlist as accident prevention only. **This is not a sandbox** — the agent can still invoke plain `gh` directly.
+- op references (`op://Private/...`, `--account my.1password.com`, the work account ID) are safe to commit: they name a vault entry but require a signed-in, unlocked `op` session on the machine to resolve. Never commit the secret material itself.
 
 ## Common Commands
 
