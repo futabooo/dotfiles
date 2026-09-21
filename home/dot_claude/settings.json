@@ -1,4 +1,61 @@
 {
+  "agentPushNotifEnabled": true,
+  "enabledPlugins": {
+    "code-review@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "firebase@firebase": true,
+    "frontend-design@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "chrome-devtools-plugins": {
+      "source": {
+        "repo": "ChromeDevTools/chrome-devtools-mcp",
+        "source": "github"
+      }
+    },
+    "firebase": {
+      "source": {
+        "repo": "firebase/firebase-tools",
+        "source": "github"
+      }
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
+            "timeout": 20,
+            "type": "command"
+          }
+        ],
+        "matcher": "ExitPlanMode"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ]
+  },
+  "model": "fable[1m]",
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5": {
+      "effortLevel": "medium"
+    }
+  },
   "permissions": {
     "allow": [
       "Bash(gh-ro:*)",
@@ -18,66 +75,14 @@
       "Bash(bun run deploy*)"
     ]
   },
-  "model": "fable[1m]",
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "ExitPlanMode",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
-            "timeout": 20
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
+  "plansDirectory": "./.plans",
+  "sandbox": {
+    "allowUnsandboxedCommands": false,
+    "enabled": true,
+    "failIfUnavailable": true
   },
   "statusLine": {
-    "type": "command",
-    "command": "~/.claude/c-c-statusline"
-  },
-  "enabledPlugins": {
-    "firebase@firebase": true,
-    "figma@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {
-    "chrome-devtools-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "ChromeDevTools/chrome-devtools-mcp"
-      }
-    },
-    "firebase": {
-      "source": {
-        "source": "github",
-        "repo": "firebase/firebase-tools"
-      }
-    }
-  },
-  "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "medium"
-    },
-    "claude-fable-5-1": {
-      "effortLevel": "medium"
-    }
-  },
-  "plansDirectory": "./plans",
-  "agentPushNotifEnabled": true
+    "command": "~/.claude/c-c-statusline",
+    "type": "command"
+  }
 }
