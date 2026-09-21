@@ -1,0 +1,43 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# ~/.claude/settings.json の statusLine.command が指すバイナリを設置する。
+# 設定ファイル (dot_claude/statusline.yaml) は chezmoi 管理下にあるが、本体は
+# 79MB の Deno コンパイル済みバイナリなのでリポジトリには含めずリリースから取得する。
+# https://github.com/babarot/c-c-statusline
+#
+# 公式インストーラ (npx @babarot/c-c-statusline) は bin/install.js が
+# releases/latest を参照するためバージョンを固定できない。
+# ここでは tag を固定してアセットを直接取得し checksums.txt で検証する。
+# 上げるときは TAG を書き換える (run_onchange_ なので再実行される)。
+TAG="0.3.0"
+
+{{ if or (eq .chezmoi.username "takahiro.futagawa") (eq .chezmoi.username "futabooo") }}
+dest="{{ .chezmoi.homeDir }}/.claude/c-c-statusline"
+
+if [ -x "$dest" ] && [ "$("$dest" --version 2>/dev/null)" = "$TAG" ]; then
+  echo "c-c-statusline $TAG is already installed, skipping."
+else
+  echo "Installing c-c-statusline $TAG ..."
+
+  # macOS の uname -m (arm64 / x86_64) がアセット名の接尾辞とそのまま一致する
+  asset="c-c-statusline-darwin-$(uname -m)"
+  base="https://github.com/babarot/c-c-statusline/releases/download/${TAG}"
+
+  tmpdir="$(mktemp -d)"
+  trap 'rm -rf "$tmpdir"' EXIT
+
+  curl -fsSL -o "${tmpdir}/${asset}" "${base}/${asset}"
+  curl -fsSL -o "${tmpdir}/checksums.txt" "${base}/checksums.txt"
+
+  # 配布元の checksums.txt で検証する。該当行が無ければ grep が失敗し set -e で止まる
+  (cd "$tmpdir" && grep " ${asset}\$" checksums.txt | shasum -a 256 -c -)
+
+  mkdir -p "$(dirname "$dest")"
+  install -m 755 "${tmpdir}/${asset}" "$dest"
+  echo "Done. (c-c-statusline $("$dest" --version))"
+fi
+{{ end }}
+{{ end -}}
