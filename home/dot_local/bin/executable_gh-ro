@@ -1,0 +1,202 @@
+#!/usr/bin/env bash
+# gh-ro - gh の readonly ラッパー。
+#
+# Claude Code に GitHub を読ませるための入口。素の `gh` は書き込みもできるので
+# allow せず、このラッパーだけを ~/.claude/settings.json の permissions.allow に入れる。
+#
+# ガードレールは二層あり、役割を混同しないこと:
+#   1. 認証情報のスコープ(主) - Fine-grained PAT に読み取り権限しか与えない。これが実効的な境界。
+#   2. 下の allowlist / フラグ検査(従) - 事故防止とエラーメッセージのため。境界として扱わない。
+#
+# これはサンドボックスではない。エージェントは素の `gh` を直接呼べるし env で
+# 任意のトークンを渡せる。あくまで事故防止のガードレール。
+#
+# 落とし穴:
+#   - gh は空の GH_TOKEN を無視して keyring / hosts.yml のフル権限認証情報に
+#     フォールバックする。op から空文字が返ったら必ず落とすこと(下の -n チェック)。
+#   - GH_TOKEN を注入するだけだと素の config.yml のエイリアスと拡張が読まれ、
+#     allowlist が意味を持たないサブコマンド名で任意のコードが走る。GH_CONFIG_DIR も併用する。
+#   - readonly トークンを rc ファイルで export しないこと。人間が書き込みコマンドを叩けなくなる。
+#   - `op whoami` は事前チェックに使えない。デスクトップアプリ連携下では
+#     "account is not signed in" を返すのに `op read` は通る。成否は op read 自体で判定する。
+#   - op がロック中だと Touch ID ダイアログでブロックしうる。フック等の非対話
+#     コンテキストでは fail-closed で落ちる。
+set -euo pipefail
+
+ALLOWED=(
+  "api"
+  "auth status"
+  "cache list"
+  "extension list"
+  "gist list"
+  "gist view"
+  "issue list"
+  "issue status"
+  "issue view"
+  "label list"
+  "org list"
+  "pr checks"
+  "pr diff"
+  "pr list"
+  "pr status"
+  "pr view"
+  "project item-list"
+  "project list"
+  "project view"
+  "release list"
+  "release view"
+  "repo list"
+  "repo view"
+  "ruleset list"
+  "ruleset view"
+  "run list"
+  "run view"
+  "search"
+  "status"
+  "workflow list"
+  "workflow view"
+)
+
+# allowlist に無いサブコマンドを叩かれたとき。許可コマンド一覧を出して言い換えを促す。
+die() {
+  echo "gh-ro: $1" >&2
+  echo "gh-ro: allowed commands:" >&2
+  printf '  gh %s\n' "${ALLOWED[@]}" >&2
+  echo "gh-ro: 書き込みが必要な場合は素の \`gh\` を使ってください。" >&2
+  exit 1
+}
+
+# それ以外のエラー。一覧を出しても解決の助けにならないので出さない。
+fail() {
+  echo "gh-ro: $1" >&2
+  exit 1
+}
+
+# --version / --help は認証不要で副作用もないので素通しする。
+# (下の sub 組み立てループは最初のフラグで break するため、ここで拾わないと
+#  "no subcommand given" で死ぬ)
+case "${1:-}" in
+  --version|-v|--help|-h|help) exec gh "$@" ;;
+esac
+
+# 先頭の(フラグでない)引数を連結してサブコマンドパスを作る
+sub=""
+for arg in "$@"; do
+  case "$arg" in -*) break ;; esac
+  sub="${sub:+$sub }$arg"
+done
+[ -n "$sub" ] || die "no subcommand given"
+
+ok=0
+for a in "${ALLOWED[@]}"; do
+  if [ "$sub" = "$a" ] || [ "${sub#"$a "}" != "$sub" ]; then ok=1; break; fi
+done
+[ "$ok" -eq 1 ] || die "'$sub' is not in the readonly allowlist"
+
+# gh api は任意のエンドポイントを叩けるので、書き込みを示唆する形を弾く。
+# (PAT が readonly ならどのみち API 側で失敗するが、エラーを分かりやすくするため)
+if [ "${sub%% *}" = "api" ]; then
+  endpoint=""
+  method=""
+  expect=""
+  has_fields=0
+  seen_api=0
+  fields=()
+
+  for arg in "$@"; do
+    if [ -n "$expect" ]; then
+      case "$expect" in
+        method) method="$arg" ;;
+        field)  has_fields=1; fields+=("$arg") ;;
+      esac
+      expect=""
+      continue
+    fi
+    case "$arg" in
+      -X|--method) expect=method; continue ;;
+      --method=*)  method="${arg#--method=}"; continue ;;
+      -f|--raw-field|-F|--field) expect=field; continue ;;
+      --raw-field=*) has_fields=1; fields+=("${arg#--raw-field=}"); continue ;;
+      --field=*)     has_fields=1; fields+=("${arg#--field=}"); continue ;;
+      --input|--input=*) fail "gh api --input は書き込みとみなします" ;;
+      -*) continue ;;
+    esac
+    # 最初の非フラグ引数は "api" 自身。その次がエンドポイント。
+    if [ "$seen_api" -eq 0 ]; then seen_api=1; continue; fi
+    [ -n "$endpoint" ] || endpoint="$arg"
+  done
+
+  if [ "$endpoint" = "graphql" ]; then
+    # GraphQL は読み取りでも HTTP POST なので method では判定できない。
+    # query 本文を見て mutation を弾く。
+    case "${method:-POST}" in
+      POST|post|GET|get) ;;
+      *) fail "gh api graphql --method $method は許可されていません" ;;
+    esac
+    if [ "$has_fields" -eq 1 ]; then
+      for f in ${fields[@]+"${fields[@]}"}; do
+        case "$f" in
+          *=@*) fail "gh api graphql: @file / @- 経由の値は中身を検査できないため不可" ;;
+        esac
+        case "$f" in
+          query=*|*Query=*)
+            if [[ "${f#*=}" =~ (^|[^[:alnum:]_])mutation([^[:alnum:]_]|$) ]]; then
+              fail "gh api graphql: mutation は許可されていません"
+            fi
+            ;;
+        esac
+      done
+    fi
+  else
+    case "${method:-}" in
+      ""|GET|get) ;;
+      *) fail "gh api --method $method は許可されていません" ;;
+    esac
+    # method 未指定でフィールドがあると gh が自動で POST にする
+    if [ "$has_fields" -eq 1 ] && [ -z "$method" ]; then
+      fail "gh api にフィールドを渡す場合は --method GET を明示してください"
+    fi
+  fi
+fi
+
+# 個人 PC と会社 PC で使うトークンを変える。両 PC とも個人・会社の両アカウントが
+# サインインされうるので op のデフォルトアカウントには依存できず、--account を必ず明示する。
+# (判別方法は home/.chezmoiscripts/darwin/run_once_02_setup-pmset-sudoers.sh.tmpl と同じ)
+case "$(id -un)" in
+  futabooo)
+    OP_ACCOUNT="my.1password.com"
+    OP_REF="op://Private/github-readonly-pat/credential"
+    ;;
+  takahiro.futagawa)
+    OP_ACCOUNT="IS24FNUODJCAVAIIAI7VR2DYQM"
+    OP_REF="op://Private/github-readonly-pat/credential"
+    ;;
+  *)
+    # 未知のマシンで会社トークンを誤って引かないよう fail-closed にする
+    fail "未知のユーザー名です: $(id -un) (このスクリプトの case 文に追記してください)"
+    ;;
+esac
+
+command -v op >/dev/null 2>&1 || fail "1Password CLI (op) が見つかりません"
+
+if ! token="$(op read --no-newline --account "$OP_ACCOUNT" "$OP_REF" 2>&1)"; then
+  echo "gh-ro: 1Password から認証情報を取得できませんでした: $OP_REF" >&2
+  echo "gh-ro: $token" >&2
+  echo "gh-ro: 項目が存在するか、op にサインイン済みかを確認してください。" >&2
+  exit 1
+fi
+# 空文字だと gh がフル権限の認証情報にフォールバックするので必ず落とす
+[ -n "$token" ] || fail "1Password から空のトークンが返りました: $OP_REF"
+
+RO_CONFIG_DIR="${HOME}/.config/gh-ro"
+mkdir -p "$RO_CONFIG_DIR"
+
+# 環境に残っているトークンは GH_CONFIG_DIR より優先されてしまうので潰す
+unset GITHUB_TOKEN GH_ENTERPRISE_TOKEN GITHUB_ENTERPRISE_TOKEN
+
+export GH_CONFIG_DIR="$RO_CONFIG_DIR"
+export GH_TOKEN="$token"
+export GH_PROMPT_DISABLED=1
+export GH_NO_UPDATE_NOTIFIER=1
+
+exec gh "$@"
