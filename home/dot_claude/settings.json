@@ -34,18 +34,7 @@
         "matcher": "ExitPlanMode"
       }
     ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      }
-    ]
+    "SessionStart": [{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]
   },
   "model": "fable[1m]",
   "modelSettings": {
@@ -77,9 +66,51 @@
   },
   "plansDirectory": "./.plans",
   "sandbox": {
-    "allowUnsandboxedCommands": false,
     "enabled": true,
-    "failIfUnavailable": true
+    "allowUnsandboxedCommands": false,
+    "failIfUnavailable": true,
+    "excludedCommands": [
+      "emulator *",
+      "open -a Simulator*"
+    ],
+    "filesystem": {
+      "allowWrite": [
+        "~/.local/share/mise/installs/flutter",
+        "~/.pub-cache",
+        "~/.dart-tool",
+        "~/.config/flutter",
+        "~/Library/Developer/Xcode/DerivedData",
+        "~/Library/Developer/CoreSimulator",
+        "~/Library/Logs/CoreSimulator",
+        "~/.cocoapods",
+        "~/Library/Caches/CocoaPods",
+        "~/android",
+        "~/.android",
+        "~/.gradle",
+        "~/.m2",
+        "~/.konan",
+        "/tmp/android-futabooo"
+      ]
+    },
+    "network": {
+      "allowLocalBinding": true,
+      "allowedDomains": [
+        "api.github.com",
+        "github.com",
+        "*.github.com",
+        "pub.dev",
+        "*.pub.dev",
+        "storage.googleapis.com",
+        "cdn.cocoapods.org",
+        "dl.google.com",
+        "maven.google.com",
+        "services.gradle.org",
+        "plugins.gradle.org",
+        "repo.maven.apache.org",
+        "repo1.maven.org",
+        "jitpack.io"
+      ]
+    }
   },
   "statusLine": {
     "command": "~/.claude/c-c-statusline",
