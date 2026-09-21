@@ -34,18 +34,7 @@
         "matcher": "ExitPlanMode"
       }
     ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "*"
-      }
-    ]
+    "SessionStart": [{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]
   },
   "model": "fable[1m]",
   "modelSettings": {
