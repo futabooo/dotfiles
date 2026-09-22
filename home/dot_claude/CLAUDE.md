@@ -10,6 +10,8 @@
   それを見て読み取り系に言い換える
 - `gh-ro api` は GET のみ。フィールドを渡す読み取りは `--method GET` を明示する。
   GraphQL は `gh-ro api graphql -f query='query{...}'` の形なら通る（mutation は拒否）
+- `gh-ro` が 1Password から認証情報を取得できず失敗する場合（sandbox 内、Remote Control 中など）は、
+  Mac の前で `gh-ro --setup` を一度実行するよう案内する。以後は Keychain キャッシュ経由で動く
 
 `gh-ro` はサンドボックスではなく事故防止のガードレール。実効的な境界は PAT の
 スコープ側にあるので、「ラッパーを通したから安全」という前提で書き込み操作を
