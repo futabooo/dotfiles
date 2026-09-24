@@ -1,0 +1,4 @@
+# gh-ro (readonly PAT を注入する gh ラッパー) は廃止した。
+# 配布済みの本体と、それが GH_CONFIG_DIR として作っていたディレクトリを消す。
+.local/bin/gh-ro
+.config/gh-ro
