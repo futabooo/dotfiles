@@ -1,3 +1,25 @@
+#!/bin/sh
+# ~/.claude/settings.json は chezmoi 以外にも書き換える主体がいる
+# (herdr integration install claude が hooks.SessionStart を足す、Claude Code 本体が
+# /model などで書き戻す)。ファイルごと置き換えると apply のたびにそれらが消えるので、
+# 今のファイルを stdin で受け取り、chezmoi が管理するキーだけを上書きして返す。
+#
+# - トップレベルのキーは MANAGED に書いたものだけを丸ごと置き換える。それ以外のキー
+#   (model など) は今のファイルの値を残す。出力のキー順はネストした先まで今のファイルに
+#   合わせる。Claude Code は書き戻すときに自分の順でキーを並べるので、揃えないと値が
+#   同じでも chezmoi diff に並べ替えだけの差分が毎回出る。
+# - hooks はイベント名ではなく command 文字列で所有を判定する。MANAGED にある command の
+#   エントリだけを差し替え、herdr や手で足した hook は同じイベント内でも残す。
+# - MANAGED から command を改名・削除するときは、古い command を RETIRED_COMMANDS に
+#   1 回の apply の間だけ残す。残さないと古いエントリが消えずに新旧が両方登録される。
+#   トップレベルのキーを管理から外して値も消したいときは RETIRED_KEYS に同様に入れる。
+
+set -eu
+
+RETIRED_KEYS='["model"]'
+RETIRED_COMMANDS='[]'
+
+MANAGED=$(cat <<'JSON'
 {
   "agentPushNotifEnabled": true,
   "enabledPlugins": {
@@ -33,10 +55,8 @@
         ],
         "matcher": "ExitPlanMode"
       }
-    ],
-    "SessionStart": [{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash '/Users/futabooo/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]
+    ]
   },
-  "model": "fable[1m]",
   "modelSettings": {
     "claude-fable-5-1": {
       "effortLevel": "medium"
@@ -149,3 +169,55 @@
     "type": "command"
   }
 }
+JSON
+)
+
+current=$(cat)
+
+if ! command -v jq >/dev/null 2>&1; then
+  # 新しいマシンの初回 apply では jq がまだ入っていない。
+  echo "modify_settings.json: jq not found; leaving ~/.claude/settings.json as is" >&2
+  if [ -n "$current" ]; then
+    printf '%s\n' "$current"
+  else
+    printf '%s\n' "$MANAGED"
+  fi
+  exit 0
+fi
+
+[ -n "$current" ] || current='{}'
+
+printf '%s\n' "$current" | jq \
+  --argjson m "$MANAGED" \
+  --argjson retired_keys "$RETIRED_KEYS" \
+  --argjson retired_commands "$RETIRED_COMMANDS" '
+  # オブジェクトのキー順を $ref に揃える。$ref にないキーは後ろに足す。配列は添字で対応させる。
+  def align($ref):
+    if type == "object" and ($ref | type) == "object" then
+      . as $new
+      | reduce ((($ref | keys_unsorted) | map(select(. as $k | $new | has($k)))) + keys_unsorted)[] as $k ({};
+          if has($k) then . else .[$k] = ($new[$k] | align($ref[$k])) end)
+    elif type == "array" and ($ref | type) == "array" then
+      [ range(length) as $i | .[$i] | align($ref[$i]) ]
+    else . end;
+
+  . as $orig
+  | ([ ($m.hooks // {})[][] | .hooks[].command ] + $retired_commands) as $owned
+  | (.hooks // {}) as $cur_hooks
+  | . + ($m | del(.hooks))
+  | delpaths([ $retired_keys[] | [.] ])
+  | .hooks = (
+      reduce (($cur_hooks | keys_unsorted) + (($m.hooks // {}) | keys_unsorted))[] as $ev ({};
+        if has($ev) then . else
+          .[$ev] = (
+            [ ($cur_hooks[$ev] // [])[]
+              | .hooks |= map(select(.command as $c | any($owned[]; . == $c) | not))
+              | select(.hooks | length > 0) ]
+            + ($m.hooks[$ev] // [])
+          )
+        end)
+      | with_entries(select(.value | length > 0))
+    )
+  | if .hooks == {} then del(.hooks) else . end
+  | align($orig)
+'
