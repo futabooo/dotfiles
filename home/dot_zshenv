@@ -11,3 +11,11 @@ export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 if (which zprof > /dev/null) ;then
   zprof
 fi
+
+# Claude Code の sandbox 内では Java が $TMPDIR を無視して /var/folders/.../T/ に
+# 一時ファイルを作ろうとし、書き込み拒否で Gradle(Android ビルド)が落ちる。
+# JDK_JAVA_OPTIONS は Gradle デーモンやワーカーを含む全 JVM 起動に効くので、ここで
+# java.io.tmpdir を sandbox が書き込みを許す $TMPDIR に向ける。
+if [[ -n "$SANDBOX_RUNTIME" && -n "$TMPDIR" ]]; then
+  export JDK_JAVA_OPTIONS="-Djava.io.tmpdir=${TMPDIR}"
+fi
