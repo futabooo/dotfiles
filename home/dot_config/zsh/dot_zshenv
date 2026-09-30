@@ -1,7 +1,26 @@
-# Claude Code の sandbox 内では Java が $TMPDIR を無視して /var/folders/.../T/ に
-# 一時ファイルを作ろうとし、書き込み拒否で Gradle(Android ビルド)が落ちる。
-# JDK_JAVA_OPTIONS は Gradle デーモンやワーカーを含む全 JVM 起動に効くので、ここで
-# java.io.tmpdir を sandbox が書き込みを許す $TMPDIR に向ける。
-if [[ -n "$SANDBOX_RUNTIME" && -n "$TMPDIR" ]]; then
-  export JDK_JAVA_OPTIONS="-Djava.io.tmpdir=${TMPDIR}"
+# Claude Code の sandbox 内の JVM 向け設定。JDK_JAVA_OPTIONS は Gradle デーモンや
+# ワーカーを含む全 JVM 起動に効く。
+if [[ -n "$SANDBOX_RUNTIME" ]]; then
+  _jdk_opts=()
+
+  # Java は $TMPDIR を無視して /var/folders/.../T/ に一時ファイルを作ろうとし、
+  # 書き込み拒否で Gradle(Android ビルド)が落ちる。sandbox が書き込みを許す $TMPDIR に向ける。
+  [[ -n "$TMPDIR" ]] && _jdk_opts+=("-Djava.io.tmpdir=${TMPDIR}")
+
+  # sandbox の通信は認証付きの HTTP プロキシ経由でしか外に出られないが、Java は
+  # HTTPS_PROXY などの環境変数を読まない。ポートと認証情報はセッションごとに変わるので
+  # 毎回 HTTPS_PROXY から組み立ててシステムプロパティで渡す。
+  # JDK は HTTPS トンネルでの Basic 認証を既定で無効にしているため、それも解除する。
+  if [[ "$HTTPS_PROXY" =~ '^http://(([^:@]+):([^@]+)@)?([^:/@]+):([0-9]+)' ]]; then
+    for _scheme in http https; do
+      _jdk_opts+=("-D${_scheme}.proxyHost=${match[4]}" "-D${_scheme}.proxyPort=${match[5]}")
+      if [[ -n "${match[2]}" ]]; then
+        _jdk_opts+=("-D${_scheme}.proxyUser=${match[2]}" "-D${_scheme}.proxyPassword=${match[3]}")
+      fi
+    done
+    _jdk_opts+=("-Djdk.http.auth.tunneling.disabledSchemes=")
+  fi
+
+  (( ${#_jdk_opts} )) && export JDK_JAVA_OPTIONS="${_jdk_opts[*]}"
+  unset _jdk_opts _scheme
 fi
