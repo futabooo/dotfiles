@@ -27,7 +27,8 @@ MANAGED=$(cat <<'JSON'
     "figma@claude-plugins-official": true,
     "firebase@firebase": true,
     "frontend-design@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "crit@crit": true
   },
   "extraKnownMarketplaces": {
     "chrome-devtools-plugins": {
@@ -39,6 +40,12 @@ MANAGED=$(cat <<'JSON'
     "firebase": {
       "source": {
         "repo": "firebase/firebase-tools",
+        "source": "github"
+      }
+    },
+    "crit": {
+      "source": {
+        "repo": "tomasz-tomczyk/crit",
         "source": "github"
       }
     }
