@@ -144,7 +144,8 @@ MANAGED=$(cat <<'JSON'
         "~/.gradle",
         "~/.m2",
         "~/.konan",
-        "/tmp/android-futabooo"
+        "/tmp/android-futabooo",
+        "~/.crit"
       ]
     },
     "network": {
