@@ -2,3 +2,6 @@
 # 配布済みの本体と、それが GH_CONFIG_DIR として作っていたディレクトリを消す。
 .local/bin/gh-ro
 .config/gh-ro
+
+# plan ファイルは crit で開くようになったので、mo で開く PreToolUse(ExitPlanMode) hook は廃止した。
+.claude/hooks/open-plan-in-mo.py
