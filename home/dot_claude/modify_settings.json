@@ -17,7 +17,7 @@
 set -eu
 
 RETIRED_KEYS='["model"]'
-RETIRED_COMMANDS='["$HOME/.claude/hooks/open-plan-in-mo.py"]'
+RETIRED_COMMANDS='[]'
 
 MANAGED=$(cat <<'JSON'
 {
