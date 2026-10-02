@@ -17,7 +17,7 @@
 set -eu
 
 RETIRED_KEYS='["model"]'
-RETIRED_COMMANDS='[]'
+RETIRED_COMMANDS='["$HOME/.claude/hooks/open-plan-in-mo.py"]'
 
 MANAGED=$(cat <<'JSON'
 {
@@ -49,20 +49,6 @@ MANAGED=$(cat <<'JSON'
         "source": "github"
       }
     }
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "$HOME/.claude/hooks/open-plan-in-mo.py",
-            "timeout": 20,
-            "type": "command"
-          }
-        ],
-        "matcher": "ExitPlanMode"
-      }
-    ]
   },
   "modelSettings": {
     "claude-fable-5-1": {
