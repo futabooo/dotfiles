@@ -76,9 +76,9 @@ async function tick(state: State): Promise<State> {
   if (!state.enabled || !(await isSimulatorRunning())) return next;
 
   const devices = await bootedDevices();
-  const stored: string[] = JSON.parse((await LocalStorage.getItem<string>(KEY_MUTED)) ?? "[]");
-  // Booted でなくなったデバイスは忘れて、次に起動したときにまた 0 にする
-  const muted = stored.filter((udid) => devices.some((d) => d.udid === udid));
+  // デバイスの音量はシャットダウンしても保持されるので、一度 0 にしたデバイスは二度と押さない。
+  // 音量を変えるたびにホストのオーディオ出力が乱れ、再生中の音にノイズが乗るため
+  const muted: string[] = JSON.parse((await LocalStorage.getItem<string>(KEY_MUTED)) ?? "[]");
 
   for (const device of devices) {
     if (muted.includes(device.udid)) continue;
@@ -163,6 +163,12 @@ export default function Command() {
       </MenuBarExtra.Section>
       <MenuBarExtra.Section>
         <MenuBarExtra.Item icon={Icon.ArrowClockwise} title="今すぐ実行" onAction={() => check().then(setState)} />
+        <MenuBarExtra.Item
+          icon={Icon.Trash}
+          title="ミュート記録をリセット"
+          tooltip="デバイスを Erase したときなど、全デバイスをもう一度 0 にしたいときに使う"
+          onAction={() => LocalStorage.removeItem(KEY_MUTED).then(check).then(setState)}
+        />
         <MenuBarExtra.Item
           icon={state?.enabled ? Icon.Pause : Icon.Play}
           title={state?.enabled ? "停止" : "開始"}
