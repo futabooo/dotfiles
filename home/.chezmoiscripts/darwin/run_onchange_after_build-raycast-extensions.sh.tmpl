@@ -1,0 +1,71 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# packages/raycast/extensions/ の自作 Raycast 拡張をビルドして Raycast に読み込ませる。
+# ソースのハッシュをコメントに含めることで変更があった時にこのスクリプトを実行する
+{{- $root := joinPath .chezmoi.sourceDir "packages/raycast/extensions" }}
+{{- range (list "*/package.json" "*/package-lock.json" "*/tsconfig.json" "*/src/*.ts" "*/src/*.tsx" "*/assets/*") }}
+{{-   range (glob (joinPath $root .)) }}
+# {{ trimPrefix (printf "%s/" $root) . }}: {{ include . | sha256sum }}
+{{-   end }}
+{{- end }}
+#
+# `ray build` は出力先を指定しないと ~/.config/raycast/extensions/<name> に書き出し、
+# Raycast に build-refresh を通知する。ただしこれで反映されるのは取り込み済みの拡張だけで、
+# 初回の取り込みは `ray develop` (npm run dev) でしかできない。
+# なのでマシンごとの初回だけ develop を "built extension successfully" が出るまで動かして止め、
+# 取り込み済みの目印を置く。止めた後も拡張は Raycast に残る。
+
+# GitHubのCIの時はビルドしない
+{{ if or (eq .chezmoi.username "takahiro.futagawa") (eq .chezmoi.username "futabooo") }}
+if ! command -v npm &> /dev/null; then
+  echo "Warning: npm not found, skipping Raycast extension build."
+  exit 0
+fi
+
+marker_dir="{{ .chezmoi.homeDir }}/.local/state/raycast-extensions"
+mkdir -p "$marker_dir"
+
+# develop を ready まで動かして SIGINT で止める (SIGINT なら Raycast に stop が通知される)
+import_extension() {
+  local log pid
+  log="$(mktemp)"
+  ./node_modules/.bin/ray develop -I > "$log" 2>&1 &
+  pid=$!
+  for _ in $(seq 1 60); do
+    if grep -q "built extension successfully" "$log"; then
+      kill -INT "$pid"
+      wait "$pid" 2> /dev/null || true
+      rm -f "$log"
+      return 0
+    fi
+    kill -0 "$pid" 2> /dev/null || break
+    sleep 1
+  done
+  kill -INT "$pid" 2> /dev/null || true
+  cat "$log"
+  rm -f "$log"
+  return 1
+}
+
+for dir in "{{ .chezmoi.homeDir }}"/packages/raycast/extensions/*/; do
+  name="$(basename "$dir")"
+  cd "$dir"
+  npm ci --no-audit --no-fund
+
+  if [ -e "$marker_dir/$name" ]; then
+    echo "Building Raycast extension $name ..."
+    ./node_modules/.bin/ray build -e dev -I
+  elif ! pgrep -xq Raycast; then
+    echo "Warning: Raycast is not running, skipping import of $name. Start Raycast and run 'npm run dev' once in $dir, then touch $marker_dir/$name"
+  else
+    echo "Importing Raycast extension $name ..."
+    import_extension
+    touch "$marker_dir/$name"
+    echo "Imported $name. Enable its menu bar command once from Raycast."
+  fi
+done
+{{ end }}
+{{ end -}}
