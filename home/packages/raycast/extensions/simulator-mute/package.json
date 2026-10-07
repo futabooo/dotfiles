@@ -1,0 +1,37 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "simulator-mute",
+  "title": "Simulator Mute",
+  "description": "iOS Simulator で起動したデバイスの音量を自動で 0 にする",
+  "icon": "icon.png",
+  "author": "futabooo",
+  "license": "MIT",
+  "platforms": [
+    "macOS"
+  ],
+  "categories": [
+    "Developer Tools"
+  ],
+  "commands": [
+    {
+      "name": "simulator-mute",
+      "title": "Simulator Mute",
+      "description": "起動した iOS Simulator のデバイスを 10 秒ごとに確認して音量を 0 にする",
+      "mode": "menu-bar",
+      "interval": "10s"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "2.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.17",
+    "@types/react": "19.0.10",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "build": "ray build -e dev",
+    "dev": "ray develop",
+    "lint": "ray lint"
+  }
+}
