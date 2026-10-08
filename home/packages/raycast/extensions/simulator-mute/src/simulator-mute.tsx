@@ -17,7 +17,13 @@ type State = {
   lastError?: { message: string; at: string };
 };
 
-type Device = { udid: string; name: string };
+type Device = { udid: string; name: string; lastBootedAt?: string };
+
+// 起動直後は SpringBoard が上がっていても音量操作が効かないことがあるので、少し待ってから押す
+const BOOT_GRACE_MS = 30_000;
+
+// ミュート済みの記録は起動 1 回単位。手で上げた音量は次の起動で 0 に戻し、起動中は触らない
+const bootKey = (device: Device) => `${device.udid}@${device.lastBootedAt ?? ""}`;
 
 const KEY_ENABLED = "enabled";
 const KEY_MUTED = "muted";
@@ -32,8 +38,14 @@ on run argv
     tell process "Simulator"
       set targetWindows to (windows whose name contains deviceName)
       if (count of targetWindows) is 0 then return "nowindow"
-      -- I/O メニューは Simulator のメインウィンドウのデバイスに効く
-      set value of attribute "AXMain" of item 1 of targetWindows to true
+      set targetWindow to item 1 of targetWindows
+      -- I/O メニューは Simulator のメインウィンドウのデバイスに効く。
+      -- 複数台起動していると AXMain だけでは切り替わらないことがあるので、ウィンドウを
+      -- 最前面に上げ (アプリ自体は前面に出ない)、切り替わったのを確かめてから押す
+      perform action "AXRaise" of targetWindow
+      set value of attribute "AXMain" of targetWindow to true
+      delay 0.2
+      if value of attribute "AXMain" of targetWindow is not true then return "notmain"
       repeat 16 times
         click menu item "Decrease Volume" of menu "I/O" of menu bar 1
         delay 0.05
@@ -65,9 +77,20 @@ async function isSimulatorRunning(): Promise<boolean> {
   }
 }
 
+// simctl の JSON に lastBootedAt が無いときは、デバイスの device.plist から読む
+async function lastBootedAt(device: Device & { dataPath?: string }): Promise<string | undefined> {
+  if (device.lastBootedAt) return device.lastBootedAt;
+  if (!device.dataPath) return undefined;
+  const plist = device.dataPath.replace(/\/data\/?$/, "/device.plist");
+  return run("/usr/bin/plutil", ["-extract", "lastBootedAt", "raw", plist]).catch(() => undefined);
+}
+
 async function bootedDevices(): Promise<Device[]> {
   const json = JSON.parse(await run("/usr/bin/xcrun", ["simctl", "list", "devices", "booted", "-j"]));
-  return Object.values(json.devices as Record<string, Device[]>).flat();
+  const devices = Object.values(json.devices as Record<string, (Device & { dataPath?: string })[]>).flat();
+  return Promise.all(
+    devices.map(async (device) => ({ udid: device.udid, name: device.name, lastBootedAt: await lastBootedAt(device) })),
+  );
 }
 
 // 大半の時間は Simulator が起動していないので、pgrep だけで終わる
@@ -76,19 +99,24 @@ async function tick(state: State): Promise<State> {
   if (!state.enabled || !(await isSimulatorRunning())) return next;
 
   const devices = await bootedDevices();
-  // デバイスの音量はシャットダウンしても保持されるので、一度 0 にしたデバイスは二度と押さない。
-  // 音量を変えるたびにホストのオーディオ出力が乱れ、再生中の音にノイズが乗るため
-  const muted: string[] = JSON.parse((await LocalStorage.getItem<string>(KEY_MUTED)) ?? "[]");
+  // 一度 0 にした起動では二度と押さない。音量を変えるたびにホストのオーディオ出力が乱れ、
+  // 再生中の音にノイズが乗るため。起動中に手で上げた音量もそのまま残す
+  const saved: string[] = JSON.parse((await LocalStorage.getItem<string>(KEY_MUTED)) ?? "[]");
+  // 今起動していない起動の記録は二度と一致しないので捨てる
+  const muted = saved.filter((key) => devices.some((device) => bootKey(device) === key));
 
   for (const device of devices) {
-    if (muted.includes(device.udid)) continue;
+    if (muted.includes(bootKey(device))) continue;
+    const bootedAt = device.lastBootedAt ? Date.parse(device.lastBootedAt) : NaN;
+    if (Date.now() - bootedAt < BOOT_GRACE_MS) continue;
     try {
       // SpringBoard が上がる前に押しても効かない。待ちきれなければ次回に再試行する
       await run("/usr/bin/xcrun", ["simctl", "bootstatus", device.udid], 5_000);
       const result = await run("/usr/bin/osascript", ["-e", MUTE_SCRIPT, device.name]);
-      // headless boot、またはウィンドウがまだ出ていない。次回に再試行する
-      if (result === "nowindow") continue;
-      muted.push(device.udid);
+      // headless boot、ウィンドウがまだ出ていない、または別のデバイスのウィンドウがメインのまま。
+      // 次回に再試行する
+      if (result === "nowindow" || result === "notmain") continue;
+      muted.push(bootKey(device));
       next.lastMuted = { name: device.name, at: new Date().toISOString() };
       next.lastError = undefined;
     } catch (error) {
@@ -166,7 +194,7 @@ export default function Command() {
         <MenuBarExtra.Item
           icon={Icon.Trash}
           title="ミュート記録をリセット"
-          tooltip="デバイスを Erase したときなど、全デバイスをもう一度 0 にしたいときに使う"
+          tooltip="起動中のデバイスをもう一度 0 にしたいときに使う (次の起動では記録が無くても 0 にする)"
           onAction={() => LocalStorage.removeItem(KEY_MUTED).then(check).then(setState)}
         />
         <MenuBarExtra.Item
