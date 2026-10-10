@@ -22,7 +22,7 @@ This is a personal dotfiles repository managed by [chezmoi](https://www.chezmoi.
 - `home/packages/raycast/extensions/<name>/`: self-made Raycast extensions (TypeScript), deployed to `~/packages/raycast/extensions/`. `run_onchange_after_build-raycast-extensions.sh.tmpl` builds them on apply. `ray build -e dev` writes to `~/.config/raycast/extensions/<name>` and notifies Raycast (`build-refresh`), but that only refreshes an extension Raycast has already imported; the first import on a machine needs `ray develop`. So the script runs `ray develop` until `built extension successfully` and stops it (the extension stays imported), then leaves a marker in `~/.local/state/raycast-extensions/<name>` and uses `ray build` from then on. A menu-bar command still has to be enabled once by hand in Raycast. Pin dependencies exactly and commit `package-lock.json`; `~/.npmrc` sets `min-release-age=7`, so a version younger than 7 days fails to install.
 - `home/dot_local/bin/`: Personal scripts, deployed to `~/.local/bin/` (second entry on `PATH`, ahead of `/opt/homebrew/bin`, so a script here shadows a Homebrew binary of the same name). New scripts **must** use the `executable_` prefix — without it chezmoi deploys them 0644 and they cannot be run. Files here have no extension (`herdr-focus-workspace`, not `herdr-focus-workspace.sh`).
 - Tool-specific configs: git, zsh, vim, starship, etc.
-- `home/dot_config/mise/config.toml`: mise global tool versions (dart, ruby, python) and settings
+- `home/dot_config/mise/config.toml`: mise global tool versions (ruby, python) and settings
 
 ## Security Constraints
 
@@ -121,7 +121,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply futabooo
 ## Development Tools Configured
 
 The dotfiles configure development environments for:
-- **Languages**: Dart (3.6.0), Ruby (3.2.2), Python (3.10, 2.7.18)
+- **Languages**: Dart (per-project via Flutter), Ruby (3.2.2), Python (3.10, 2.7.18)
 - **Version management**: mise (`~/.config/mise/config.toml` for global, `.mise.toml` / `.tool-versions` per repo)
 - **Shell**: Zsh with starship prompt, sheldon plugin manager
 - **Editors**: Vim, VSCode (with extensive extension list)
