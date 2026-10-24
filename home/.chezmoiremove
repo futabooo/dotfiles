@@ -5,3 +5,10 @@
 
 # plan ファイルは crit で開くようになったので、mo で開く PreToolUse(ExitPlanMode) hook は廃止した。
 .claude/hooks/open-plan-in-mo.py
+
+# iOS Simulator の音量を 0 にする Raycast 拡張 (simulator-mute) は廃止した。
+# 配布済みのソースと、ray build が書き出していた Raycast 側のビルド、取り込み済みの目印を消す。
+# Raycast 自体からの登録解除は Raycast の Extensions 設定で手で行う。
+packages/raycast/extensions/simulator-mute
+.config/raycast/extensions/simulator-mute
+.local/state/raycast-extensions/simulator-mute
