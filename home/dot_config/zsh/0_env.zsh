@@ -52,7 +52,6 @@ done
 #  brew upgrade後に起動済みプロセスが消えたパスを抱え続ける)
 export JAVA17_HOME="$_brew_prefix/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
 export JAVA21_HOME="$_brew_prefix/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
-export JAVA24_HOME="$_brew_prefix/opt/openjdk@24/libexec/openjdk.jdk/Contents/Home"
 export JAVA_HOME=${JAVA17_HOME}
 unset _brew_prefix _jvm_dir _jdk _name _link
 
