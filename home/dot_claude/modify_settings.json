@@ -30,7 +30,9 @@ MANAGED=$(cat <<'JSON'
     "skill-creator@claude-plugins-official": true,
     "crit@crit": true,
     "dart-flutter@dart-flutter": true,
-    "mobile-mcp@mobile-mcp": true
+    "mobile-mcp@mobile-mcp": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "ruminate@ruminate": true
   },
   "env": {
     "MOBILEMCP_DISABLE_TELEMETRY": "1"
@@ -65,6 +67,12 @@ MANAGED=$(cat <<'JSON'
         "repo": "mobile-next/mobile-mcp",
         "source": "github"
       }
+    },
+    "ruminate": {
+      "source": {
+        "repo": "futabooo/ruminate",
+        "source": "github"
+      }
     }
   },
   "modelSettings": {
@@ -73,6 +81,9 @@ MANAGED=$(cat <<'JSON'
     },
     "claude-opus-5": {
       "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "high"
     }
   },
   "permissions": {
